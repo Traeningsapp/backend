@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Ports.Incoming;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
@@ -7,13 +7,21 @@ namespace REST_API.Controllers
     [ApiController]
     public class ExerciseController : ControllerBase
     {
+        private readonly IExerciseUseCase _exerciseUseCase;
+        public ExerciseController(IExerciseUseCase exerciseUseCase)
+        {
+            _exerciseUseCase = exerciseUseCase;
+        }
+
         [Route("get/musclegroups")]
         [HttpGet]
         public IActionResult GetMusclegroups()
         {
             try
             {
-                return Ok();
+                var apiResponse = _exerciseUseCase.GetMusclegroups();
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -23,11 +31,13 @@ namespace REST_API.Controllers
 
         [Route("get/muscle")]
         [HttpGet]
-        public IActionResult GetMuscles(string musclegroupId)
+        public IActionResult GetMuscles(int musclegroupId)
         {
             try
             {
-                return Ok();
+                var apiResponse = _exerciseUseCase.GetExercisesInMusclegroup(musclegroupId);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -38,11 +48,13 @@ namespace REST_API.Controllers
 
         [Route("get/exerciselist")]
         [HttpGet]
-        public IActionResult GetExerciselist(string muscleId)
+        public IActionResult GetExerciselist(int muscleId)
         {
             try
             {
-                return Ok();
+                var apiResponse = _exerciseUseCase.GetExercisesForMuscle(muscleId);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -52,11 +64,13 @@ namespace REST_API.Controllers
 
         [Route("get/exercise")]
         [HttpGet]
-        public IActionResult GetExercise(string exerciseId)
+        public IActionResult GetExercise(int exerciseId)
         {
             try
             {
-                return Ok();
+                var apiResponse = _exerciseUseCase.GetExercise(exerciseId);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Ports.Incoming;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
@@ -7,13 +7,22 @@ namespace REST_API.Controllers
     [ApiController]
     public class WorkoutController : ControllerBase
     {
+        private readonly IWorkoutUseCase _workoutUseCase;
+
+        public WorkoutController(IWorkoutUseCase workoutUseCase)
+        {
+            _workoutUseCase = workoutUseCase;
+        }
+
         [Route("get/newworkout")]
         [HttpGet]
         public IActionResult GetNewWorkout()
         {
             try
             {
-                return Ok();
+                var apiResponse = _workoutUseCase.GenerateNewWorkout();
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -23,11 +32,13 @@ namespace REST_API.Controllers
 
         [Route("get/workoutfromhistory")]
         [HttpGet]
-        public IActionResult GetWorkoutFromHistory(string userId, string workoutId)
+        public IActionResult GetWorkoutFromHistory(int userId, int workoutId)
         {
             try
             {
-                return Ok();
+                var apiResponse = _workoutUseCase.StartWorkoutFromHistory(userId, workoutId);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -41,7 +52,9 @@ namespace REST_API.Controllers
         {
             try
             {
-                return Ok();
+                var apiResponse = _workoutUseCase.GetWorkoutHistory(userId);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
@@ -51,11 +64,13 @@ namespace REST_API.Controllers
 
         [Route("save/workout")]
         [HttpPost]
-        public IActionResult SaveWorkout(string workoutSomJson)
+        public IActionResult SaveWorkout(int userId, string workoutAsJson)
         {
             try
             {
-                return Ok();
+                var apiResponse = _workoutUseCase.SaveWorkout(userId, workoutAsJson);
+
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {
