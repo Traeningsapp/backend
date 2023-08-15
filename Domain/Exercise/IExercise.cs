@@ -7,5 +7,6 @@
         int Id { get; set; }
         bool IsCompound { get; set; }
         string Name { get; set; }
+        List<IMusclegroup> Musclegroups { get; set; }
     }
 }

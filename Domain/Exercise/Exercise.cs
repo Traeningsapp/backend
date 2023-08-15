@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Exercise
+﻿namespace Domain.Exercise
 {
     public class Exercise : IExercise
     {
@@ -15,6 +9,7 @@ namespace Domain.Exercise
             _description = description;
             _benefits = benefits;
             _isCompound = isCompound;
+            _musclegroups = new List<IMusclegroup>();
         }
 
         private int _id;
@@ -22,6 +17,7 @@ namespace Domain.Exercise
         private string _description;
         private string _benefits;
         private bool _isCompound;
+        private List<IMusclegroup> _musclegroups;
 
         public int Id
         {
@@ -42,6 +38,10 @@ namespace Domain.Exercise
         public bool IsCompound
         {
             get => _isCompound; set => _isCompound = value;
+        }
+        public List<IMusclegroup> Musclegroups
+        {
+            get => _musclegroups; set => _musclegroups = value;
         }
     }
 }
