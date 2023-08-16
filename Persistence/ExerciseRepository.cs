@@ -13,14 +13,14 @@ namespace Persistence
         {
             try
             {
-                string procedureNavn = "Exercise_GetById";
+                string procedureName = "Exercise_GetById";
                 var parameters = new
                 {
                     id = exerciseId,
                 };
 
-                var exercises = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureNavn, parameters);
-                IExercise exercise = exercises.First();
+                var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
+                IExercise exercise = dbResult.First();
 
                 return exercise;
             }
@@ -30,19 +30,39 @@ namespace Persistence
             }
         }
 
+
         public List<IMuscle> GetMusclesInExerciseById(int exerciseId)
         {
             try
             {
-                string procedureNavn = "Muscles_GetByExerciseId";
+                string procedureName = "Muscles_GetByExerciseId";
                 var parameters = new
                 {
                     exerciseId,
                 };
 
-                var muscles = ExecuteStoredProcedure<Muscle>(DbConnection(), procedureNavn, parameters);
+                var dbResult = ExecuteStoredProcedure<Muscle>(DbConnection(), procedureName, parameters);
                 
-                return muscles.Cast<IMuscle>().ToList();
+                return dbResult.Cast<IMuscle>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public List<IExercise> GetExercisesForMuscle(int muscleId)
+        {
+            try
+            {
+                string procedureName = "Exercises_GetByMsucleId";
+                var parameters = new
+                {
+                    muscleId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IExercise>().ToList();
             }
             catch (Exception e)
             {
