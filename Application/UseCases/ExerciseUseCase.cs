@@ -22,15 +22,24 @@ namespace Application.UseCases
 
                 return exercise;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Couldn't fetch exercise.");
             }
         }
 
-        public List<IExercise> GetExercisesForMuscle(int musclegroupId)
+        public List<IExercise> GetExercisesForMuscle(int muscleId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<IExercise> exercises = _exerciseRepository.GetExercisesForMuscle(muscleId);
+                
+                return exercises;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch exercises for muscle.");
+            }
         }
 
         public List<IMuscle> GetExercisesInMusclegroup(int musclegroupId)
