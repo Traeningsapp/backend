@@ -5,7 +5,7 @@ namespace Persistence
 {
     public class ExerciseRepository : BaseRepository, IExerciseRepository
     {
-        public ExerciseRepository(string connectionString) : base(connectionString)
+        public ExerciseRepository(IConfigurationProvider configurationProvider) : base(configurationProvider)
         {
         }
 

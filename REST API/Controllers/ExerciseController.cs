@@ -1,4 +1,5 @@
 ﻿using Application.Ports.Incoming;
+using Application.Ports.Outgoing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
@@ -8,6 +9,7 @@ namespace REST_API.Controllers
     public class ExerciseController : ControllerBase
     {
         private readonly IExerciseUseCase _exerciseUseCase;
+
         public ExerciseController(IExerciseUseCase exerciseUseCase)
         {
             _exerciseUseCase = exerciseUseCase;
