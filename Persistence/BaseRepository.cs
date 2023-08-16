@@ -1,27 +1,27 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence
 {
     public abstract class BaseRepository : IBaseRepository
     {
-        private readonly string _connectionString;
+        private readonly IConfigurationProvider _configurationProvider;
         private IDbConnection? _connection;
 
-        protected BaseRepository(string connectionString)
+        protected BaseRepository(IConfigurationProvider configurationProvider)
         {
-            _connectionString = connectionString;
+            _configurationProvider = configurationProvider;
         }
+
+        private string? ConnectionString => _configurationProvider.GetConnectionString();
 
         public IDbConnection DbConnection()
         {
-            _connection ??= new SqlConnection(_connectionString);
+            _connection ??= new SqlConnection(ConnectionString);
 
             if (_connection.State != ConnectionState.Open)
                 ÅbenConnection();

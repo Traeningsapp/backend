@@ -1,10 +1,18 @@
 ﻿using Application.Ports.Incoming;
+using Application.Ports.Outgoing;
 using Domain.Workout;
 
 namespace Application.UseCases
 {
     public class WorkoutUseCase : IWorkoutUseCase
     {
+        private readonly IWorkoutRepository _workoutRepository;
+
+        public WorkoutUseCase(IWorkoutRepository workoutRepository)
+        {
+            _workoutRepository = workoutRepository;
+        }
+
         public IWorkout GenerateNewWorkout()
         {
             throw new NotImplementedException();

@@ -1,5 +1,8 @@
 using Application.Ports.Incoming;
+using Application.Ports.Outgoing;
 using Application.UseCases;
+using Persistence;
+using REST_API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IExerciseUseCase, ExerciseUseCase>();
 builder.Services.AddScoped<IWorkoutUseCase, WorkoutUseCase>();
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+builder.Services.AddSingleton<Persistence.IConfigurationProvider, AppConfigurationProvider>();
+
 
 var app = builder.Build();
 
