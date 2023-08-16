@@ -2,13 +2,17 @@
 {
     public class Musclegroup : IMusclegroup
     {
+        public Musclegroup()
+        {
+
+        }
         public Musclegroup(int id, string name)
         {
             _id = id;
             _name = name;
         }
         private int _id;
-        private string _name;
+        private string? _name;
 
         public int Id
         {
@@ -16,7 +20,7 @@
         }
         public string Name
         {
-            get => _name; set => _name = value;
+            get => _name ??= ""; set => _name = value;
         }
     }
 }

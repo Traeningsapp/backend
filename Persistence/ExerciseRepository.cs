@@ -89,5 +89,22 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public List<IMusclegroup> GetMuscleGroups()
+        {
+            try
+            {
+                string procedureName = "Musclegroup_GetAll";
+                var parameters = new { };
+
+                var dbResult = ExecuteStoredProcedure<Musclegroup>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IMusclegroup>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
