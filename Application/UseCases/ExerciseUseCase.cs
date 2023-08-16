@@ -15,7 +15,17 @@ namespace Application.UseCases
 
         public IExercise GetExercise(int exerciseId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IExercise exercise = _exerciseRepository.GetExerciseById(exerciseId);
+                exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exerciseId);
+
+                return exercise;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Couldn't fetch exercise.");
+            }
         }
 
         public List<IExercise> GetExercisesForMuscle(int musclegroupId)

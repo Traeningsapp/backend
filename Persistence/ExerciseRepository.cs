@@ -9,21 +9,40 @@ namespace Persistence
         {
         }
 
-        public IExercise? GetExerciseById(int exerciseId)
+        public IExercise GetExerciseById(int exerciseId)
         {
             try
             {
                 string procedureNavn = "Exercise_GetById";
                 var parameters = new
                 {
-                    Id = exerciseId,
+                    id = exerciseId,
                 };
 
-                var exercises = ExecuteStoredProcedure<IExercise>(DbConnection(), procedureNavn, parameters);
-                IExercise? exercise = exercises.FirstOrDefault();
-
+                var exercises = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureNavn, parameters);
+                IExercise exercise = exercises.First();
 
                 return exercise;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public List<IMuscle> GetMusclesInExerciseById(int exerciseId)
+        {
+            try
+            {
+                string procedureNavn = "Muscles_GetByExerciseId";
+                var parameters = new
+                {
+                    exerciseId,
+                };
+
+                var muscles = ExecuteStoredProcedure<Muscle>(DbConnection(), procedureNavn, parameters);
+                
+                return muscles.Cast<IMuscle>().ToList();
             }
             catch (Exception e)
             {

@@ -21,7 +21,7 @@ namespace Persistence
 
         public IDbConnection DbConnection()
         {
-            _connection ??= new SqlConnection(ConnectionString);
+            _connection = new SqlConnection(ConnectionString);
 
             if (_connection.State != ConnectionState.Open)
                 ÅbenConnection();

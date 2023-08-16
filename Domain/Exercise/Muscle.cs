@@ -2,6 +2,10 @@
 {
     public class Muscle : IMuscle
     {
+        public Muscle()
+        {
+            
+        }
         public Muscle(int id, int musclegroupId, string name)
         {
             _name = name;
@@ -11,7 +15,7 @@
 
         private int _id;
         private int _musclegroupId;
-        private string _name;
+        private string _name = "";
 
         public int Id
         {

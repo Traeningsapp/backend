@@ -6,7 +6,7 @@ namespace Application.Ports.Incoming
     {
         List<IMusclegroup> GetMusclegroups();
         List<IMuscle> GetExercisesInMusclegroup(int musclegroupId);
-        IExercise GetExercise(int exerciseId);
+        IExercise? GetExercise(int exerciseId);
         List<IExercise> GetExercisesForMuscle(int musclegroupId);
     }
 }

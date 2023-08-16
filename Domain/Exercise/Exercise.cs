@@ -2,6 +2,9 @@
 {
     public class Exercise : IExercise
     {
+        public Exercise()
+        {
+        }
         public Exercise(int id, string name, string description, string benefits, bool isCompound)
         {
             _id = id;
@@ -10,14 +13,16 @@
             _benefits = benefits;
             _isCompound = isCompound;
             _musclegroups = new List<IMusclegroup>();
+            _muscles = new List<IMuscle>();
         }
 
         private int _id;
-        private string _name;
-        private string _description;
-        private string _benefits;
+        private string _name = "";
+        private string _description = "";
+        private string _benefits = "";
         private bool _isCompound;
-        private List<IMusclegroup> _musclegroups;
+        private List<IMusclegroup>? _musclegroups;
+        private List<IMuscle>? _muscles;
 
         public int Id
         {
@@ -41,7 +46,11 @@
         }
         public List<IMusclegroup> Musclegroups
         {
-            get => _musclegroups; set => _musclegroups = value;
+            get => _musclegroups ??= new List<IMusclegroup>(); set => _musclegroups = value;
+        }
+        public List<IMuscle> Muscles
+        {
+            get => _muscles ??= new List<IMuscle>(); set => _muscles = value;
         }
     }
 }
