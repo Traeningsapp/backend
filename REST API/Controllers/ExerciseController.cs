@@ -37,7 +37,7 @@ namespace REST_API.Controllers
         {
             try
             {
-                var apiResponse = _exerciseUseCase.GetExercisesInMusclegroup(musclegroupId);
+                var apiResponse = _exerciseUseCase.GetMusclesByMusclegroupId(musclegroupId);
 
                 return Ok(apiResponse);
             }
