@@ -58,7 +58,16 @@ namespace Application.UseCases
 
         public List<IMusclegroup> GetMusclegroups()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<IMusclegroup> musclegroups = _exerciseRepository.GetMuscleGroups();
+
+                return musclegroups;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch musclegroups.");
+            }
         }
     }
 }
