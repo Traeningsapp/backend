@@ -42,9 +42,18 @@ namespace Application.UseCases
             }
         }
 
-        public List<IMuscle> GetExercisesInMusclegroup(int musclegroupId)
+        public List<IMuscle> GetMusclesByMusclegroupId(int musclegroupId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<IMuscle> muscles = _exerciseRepository.GetMusclesByMusclegroupId(musclegroupId);
+
+                return muscles;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch muscles.");
+            }
         }
 
         public List<IMusclegroup> GetMusclegroups()

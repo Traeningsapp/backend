@@ -42,7 +42,7 @@ namespace Persistence
                 };
 
                 var dbResult = ExecuteStoredProcedure<Muscle>(DbConnection(), procedureName, parameters);
-                
+
                 return dbResult.Cast<IMuscle>().ToList();
             }
             catch (Exception e)
@@ -63,6 +63,26 @@ namespace Persistence
                 var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
 
                 return dbResult.Cast<IExercise>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public List<IMuscle> GetMusclesByMusclegroupId(int musclegroupId)
+        {
+            try
+            {
+                string procedureName = "Muscles_GetByMusclegroupId";
+                var parameters = new
+                {
+                    musclegroupId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Muscle>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IMuscle>().ToList();
             }
             catch (Exception e)
             {
