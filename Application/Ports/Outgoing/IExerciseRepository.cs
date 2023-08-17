@@ -14,5 +14,6 @@ namespace Application.Ports.Outgoing
         List<IExercise> GetExercisesForMuscle(int muscleId);
         List<IMuscle> GetMusclesByMusclegroupId(int musclegroupId);
         List<IMusclegroup> GetMuscleGroups();
+        List<IExercise> GetExercisesByWorkoutId(int workoutId);
     }
 }

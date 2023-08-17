@@ -1,4 +1,5 @@
-﻿using Domain.Workout;
+﻿using Domain.Exercise;
+using Domain.Workout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
