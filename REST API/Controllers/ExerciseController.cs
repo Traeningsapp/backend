@@ -1,5 +1,4 @@
 ﻿using Application.Ports.Incoming;
-using Application.Ports.Outgoing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers

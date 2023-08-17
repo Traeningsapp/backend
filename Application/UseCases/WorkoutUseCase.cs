@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
+using Domain.User;
 using Domain.Workout;
 
 namespace Application.UseCases
@@ -23,9 +24,21 @@ namespace Application.UseCases
             throw new NotImplementedException();
         }
 
-        public IWorkout SaveWorkout(int userId, string workoutAsJson)
+        public void SaveWorkout(int userId, string workoutAsJson)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IUser user = new User(userId);
+                IWorkout workout = new Workout(user);
+
+                workout.FromJson(workoutAsJson);
+
+                _workoutRepository.SaveWorkout(workout);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public IWorkout StartWorkoutFromHistory(int userId, int workoutId)

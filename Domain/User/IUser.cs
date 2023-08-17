@@ -4,7 +4,7 @@ namespace Domain.User
 {
     public interface IUser
     {
-        string Id { get; set; }
+        int Id { get; set; }
         List<IWorkout> WorkoutHistory { get; set; }
     }
 }

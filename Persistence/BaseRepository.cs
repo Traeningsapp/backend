@@ -46,6 +46,22 @@ namespace Persistence
             }
         }
 
+        public void ExecuteStoredProcedure(IDbConnection connection, string procedureNavn, object? parameters = null)
+        {
+            try
+            {
+                connection.Query(procedureNavn, parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
         public IDbConnection? ÅbenConnection()
         {
             _connection?.Open();
