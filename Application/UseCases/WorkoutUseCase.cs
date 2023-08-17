@@ -8,10 +8,12 @@ namespace Application.UseCases
     public class WorkoutUseCase : IWorkoutUseCase
     {
         private readonly IWorkoutRepository _workoutRepository;
+        private readonly IExerciseRepository _exerciseRepository;
 
-        public WorkoutUseCase(IWorkoutRepository workoutRepository)
+        public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository)
         {
             _workoutRepository = workoutRepository;
+            _exerciseRepository = exerciseRepository;
         }
 
         public IWorkout GenerateNewWorkout()
@@ -52,7 +54,20 @@ namespace Application.UseCases
 
         public IWorkout StartWorkoutFromHistory(int userId, int workoutId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IUser user = new User(userId);
+                IWorkout workout = new Workout(user)
+                {
+                    Exercises = _exerciseRepository.GetExercisesByWorkoutId(workoutId)
+                };
+
+                return workout;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }
