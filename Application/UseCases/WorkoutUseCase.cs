@@ -19,9 +19,18 @@ namespace Application.UseCases
             throw new NotImplementedException();
         }
 
-        public List<IWorkout> GetWorkoutHistory(string userId)
+        public List<IWorkout> GetWorkoutHistory(int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<IWorkout> workouts = _workoutRepository.GetWorkoutHistoryByUserId(userId);
+
+                return workouts;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public void SaveWorkout(int userId, string workoutAsJson)

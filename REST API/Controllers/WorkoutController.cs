@@ -48,7 +48,7 @@ namespace REST_API.Controllers
 
         [Route("get/workouthistory")]
         [HttpGet]
-        public IActionResult GetWorkouthistory(string userId)
+        public IActionResult GetWorkouthistory(int userId)
         {
             try
             {
