@@ -6,7 +6,7 @@ namespace Application.Ports.Incoming
     {
         IWorkout GenerateNewWorkout();
         void SaveWorkout(int userId, string workoutAsJson);
-        List<IWorkout> GetWorkoutHistory(string userId);
+        List<IWorkout> GetWorkoutHistory(int userId);
         IWorkout StartWorkoutFromHistory(int userId, int workoutId);
     }
 }

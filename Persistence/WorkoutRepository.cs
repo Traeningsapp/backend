@@ -30,7 +30,7 @@ namespace Persistence
             }
         }
 
-        public void SaveExercisesInWorkout(IWorkout workout)
+        private void SaveExercisesInWorkout(IWorkout workout)
         {
             try
             {
@@ -59,9 +59,24 @@ namespace Persistence
             throw new NotImplementedException();
         }
 
-        public List<IWorkout> GetWorkoutHistory(string userId)
+        public List<IWorkout> GetWorkoutHistoryByUserId(int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string procedureName = "Workouts_GetByUserId";
+                var parameters = new
+                {
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Workout>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IWorkout>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public IWorkout StartWorkoutFromHistory(int userId, int workoutId)

@@ -11,7 +11,7 @@ namespace Application.Ports.Outgoing
     {
         void SaveWorkout(IWorkout workout);
         IWorkout GenerateNewWorkout();
-        List<IWorkout> GetWorkoutHistory(string userId);
+        List<IWorkout> GetWorkoutHistoryByUserId(int userId);
         IWorkout StartWorkoutFromHistory(int userId, int workoutId);
     }
 }
