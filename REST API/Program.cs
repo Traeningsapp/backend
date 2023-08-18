@@ -1,6 +1,7 @@
 using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
 using Application.UseCases;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
 using REST_API;
 
@@ -17,6 +18,16 @@ builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddSingleton<Persistence.IConfigurationProvider, AppConfigurationProvider>();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = "https://VORES_AUTH0_DOMAIN/";
+    options.Audience = "VORES_API_IDENTIFIER(AUDIENCE_VALUE_PÅ_AUTH0_API_DASHBOARD";
+});
+
 
 var app = builder.Build();
 
@@ -29,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
