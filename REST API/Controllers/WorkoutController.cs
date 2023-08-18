@@ -1,4 +1,5 @@
 ﻿using Application.Ports.Incoming;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
@@ -14,6 +15,7 @@ namespace REST_API.Controllers
             _workoutUseCase = workoutUseCase;
         }
 
+        [Authorize]
         [Route("get/newworkout")]
         [HttpGet]
         public IActionResult GetNewWorkout()
@@ -30,6 +32,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("get/workoutfromhistory")]
         [HttpGet]
         public IActionResult GetWorkoutFromHistory(int userId, int workoutId)
@@ -46,6 +49,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("get/workouthistory")]
         [HttpGet]
         public IActionResult GetWorkouthistory(int userId)
@@ -62,6 +66,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("save/workout")]
         [HttpPost]
         public IActionResult SaveWorkout(int userId, string workoutAsJson)
@@ -77,7 +82,5 @@ namespace REST_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
     }
 }

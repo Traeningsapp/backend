@@ -1,4 +1,5 @@
 ﻿using Application.Ports.Incoming;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
@@ -14,6 +15,7 @@ namespace REST_API.Controllers
             _exerciseUseCase = exerciseUseCase;
         }
 
+        [Authorize]
         [Route("get/musclegroups")]
         [HttpGet]
         public IActionResult GetMusclegroups()
@@ -30,6 +32,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("get/muscle")]
         [HttpGet]
         public IActionResult GetMuscles(int musclegroupId)
@@ -47,6 +50,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("get/exerciselist")]
         [HttpGet]
         public IActionResult GetExerciselist(int muscleId)
@@ -63,6 +67,7 @@ namespace REST_API.Controllers
             }
         }
 
+        [Authorize]
         [Route("get/exercise")]
         [HttpGet]
         public IActionResult GetExercise(int exerciseId)
