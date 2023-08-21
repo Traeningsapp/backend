@@ -52,7 +52,7 @@ namespace REST_API.Controllers
         [Authorize]
         [Route("get/workouthistory")]
         [HttpGet]
-        public IActionResult GetWorkouthistory(int userId)
+        public IActionResult GetWorkoutHistory(int userId)
         {
             try
             {
