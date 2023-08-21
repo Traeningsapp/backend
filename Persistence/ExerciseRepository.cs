@@ -74,7 +74,7 @@ namespace Persistence
         {
             try
             {
-                string procedureName = "Muscles_GetByMusclegroupId";
+                string procedureName = "dbo.Muscles_GetByMusclegroupId";
                 var parameters = new
                 {
                     musclegroupId

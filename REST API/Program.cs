@@ -24,8 +24,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.Authority = "traenings-app.eu.auth0.com";
-    options.Audience = "https://traenings-app.eu.auth0.com/api/v2/";
+    options.Authority = "https://traenings-app.eu.auth0.com/";
+    options.Audience = "https://traenings-app-backend.com";
 });
 
 
