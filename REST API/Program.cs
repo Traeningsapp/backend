@@ -24,8 +24,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.Authority = "https://VORES_AUTH0_DOMAIN/";
-    options.Audience = "VORES_API_IDENTIFIER(AUDIENCE_VALUE_PÅ_AUTH0_API_DASHBOARD";
+    options.Authority = "traenings-app.eu.auth0.com";
+    options.Audience = "https://traenings-app.eu.auth0.com/api/v2/";
 });
 
 
