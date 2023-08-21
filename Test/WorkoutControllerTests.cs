@@ -41,7 +41,7 @@ namespace Test
         public void GetNewWorkout_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
         {
             // Arrange
-            var exceptionMessage = "Test Exception Message";
+            var exceptionMessage = "Test exception message";
             _mockWorkoutUseCase.Setup(x => x.GenerateNewWorkout()).Throws(new Exception(exceptionMessage));
 
             // Act
@@ -72,7 +72,7 @@ namespace Test
         public void GetWorkoutFromHistory_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
         {
             // Arrange
-            var exceptionMessage = "Test Exception Message";
+            var exceptionMessage = "Test exception message";
             _mockWorkoutUseCase.Setup(x => x.StartWorkoutFromHistory(It.IsAny<int>(), It.IsAny<int>())).Throws(new Exception(exceptionMessage));
 
             // Act
@@ -103,7 +103,7 @@ namespace Test
         public void GetWorkoutHistory_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
         {
             // Arrange
-            var exceptionMessage = "Test Exception Message";
+            var exceptionMessage = "Test exception message";
             _mockWorkoutUseCase.Setup(x => x.GetWorkoutHistory(It.IsAny<int>())).Throws(new Exception(exceptionMessage));
 
             // Act
@@ -131,7 +131,7 @@ namespace Test
         public void SaveWorkout_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
         {
             // Arrange
-            var exceptionMessage = "Test Exception Message";
+            var exceptionMessage = "Test exception message";
             _mockWorkoutUseCase.Setup(x => x.SaveWorkout(It.IsAny<int>(), It.IsAny<string>())).Throws(new Exception(exceptionMessage));
 
             // Act
