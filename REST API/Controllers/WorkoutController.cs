@@ -33,7 +33,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/workoutfromhistory")]
+        [Route("get/workoutfromhistory/user/{userId}/workout/{workoutId}")]
         [HttpGet]
         public IActionResult GetWorkoutFromHistory(int userId, int workoutId)
         {
@@ -50,7 +50,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/workouthistory")]
+        [Route("get/workouthistory/user/{userId}")]
         [HttpGet]
         public IActionResult GetWorkoutHistory(int userId)
         {
@@ -67,7 +67,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("save/workout")]
+        [Route("save/workout/user/{userId}/workout/{workoutAsJson}")]
         [HttpPost]
         public IActionResult SaveWorkout(int userId, string workoutAsJson)
         {
