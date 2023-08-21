@@ -33,7 +33,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/muscle")]
+        [Route("get/muscle/{musclegroupId}")]
         [HttpGet]
         public IActionResult GetMuscles(int musclegroupId)
         {
@@ -51,7 +51,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/exerciselist")]
+        [Route("get/exerciselist/{muscleId}")]
         [HttpGet]
         public IActionResult GetExerciselist(int muscleId)
         {
@@ -68,7 +68,7 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/exercise")]
+        [Route("get/exercise/{exerciseId}")]
         [HttpGet]
         public IActionResult GetExercise(int exerciseId)
         {
