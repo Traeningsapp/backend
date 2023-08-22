@@ -54,9 +54,26 @@ namespace Persistence
             }
         }
 
-        public IWorkout GenerateNewWorkout()
+        public IWorkout GenerateNewWorkout(int split_id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string procedureName = "Workout_GetNew";
+
+                var parameters = new 
+                { 
+                    split_id 
+                };
+
+                var dbResult = ExecuteStoredProcedure<Workout>(DbConnection(), procedureName, parameters);
+                IWorkout workout = dbResult.First();
+
+                return workout;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<IWorkout> GetWorkoutHistoryByUserId(int userId)

@@ -16,9 +16,18 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public IWorkout GenerateNewWorkout()
+        public IWorkout GenerateNewWorkout(int split_id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IWorkout workout = _workoutRepository.GenerateNewWorkout(split_id);
+
+                return workout;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<IWorkout> GetWorkoutHistory(int userId)

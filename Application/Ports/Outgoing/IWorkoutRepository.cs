@@ -11,7 +11,7 @@ namespace Application.Ports.Outgoing
     public interface IWorkoutRepository
     {
         void SaveWorkout(IWorkout workout);
-        IWorkout GenerateNewWorkout();
+        IWorkout GenerateNewWorkout(int split_id);
         List<IWorkout> GetWorkoutHistoryByUserId(int userId);
         IWorkout StartWorkoutFromHistory(int userId, int workoutId);
     }
