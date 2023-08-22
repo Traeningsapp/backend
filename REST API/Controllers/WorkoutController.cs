@@ -16,13 +16,13 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/newworkout")]
+        [Route("get/newworkout/{split_id}")]
         [HttpGet]
-        public IActionResult GetNewWorkout()
+        public IActionResult GetNewWorkout(int split_id)
         {
             try
             {
-                var apiResponse = _workoutUseCase.GenerateNewWorkout();
+                var apiResponse = _workoutUseCase.GenerateNewWorkout(split_id);
 
                 return Ok(apiResponse);
             }
@@ -31,7 +31,7 @@ namespace REST_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        
         [Authorize]
         [Route("get/workoutfromhistory/user/{userId}/workout/{workoutId}")]
         [HttpGet]
