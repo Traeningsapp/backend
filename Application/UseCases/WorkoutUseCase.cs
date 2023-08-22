@@ -16,11 +16,11 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public List<IWorkout> GenerateNewWorkout(int split_id)
+        public IWorkout GenerateNewWorkout(int split_id)
         {
             try
             {
-                List<IWorkout> workout = _workoutRepository.GenerateNewWorkout(split_id);
+                IWorkout workout = _workoutRepository.GenerateNewWorkout(split_id);
 
                 return workout;
             }

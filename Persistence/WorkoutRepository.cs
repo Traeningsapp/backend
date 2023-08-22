@@ -54,7 +54,7 @@ namespace Persistence
             }
         }
 
-        public List<IWorkout> GenerateNewWorkout(int split_id)
+        public IWorkout GenerateNewWorkout(int split_id)
         {
             try
             {
@@ -62,12 +62,13 @@ namespace Persistence
 
                 var parameters = new 
                 { 
-                    split_id = split_id 
+                    split_id 
                 };
 
                 var dbResult = ExecuteStoredProcedure<Workout>(DbConnection(), procedureName, parameters);
+                IWorkout workout = dbResult.First();
 
-                return dbResult.Cast<IWorkout>().ToList();
+                return workout;
             }
             catch (Exception e)
             {
