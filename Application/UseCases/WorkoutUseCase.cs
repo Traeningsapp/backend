@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
+using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
 
@@ -20,7 +21,9 @@ namespace Application.UseCases
         {
             try
             {
-                IWorkout workout = _workoutRepository.GenerateNewWorkout(split_id);
+                IWorkout workout = new Workout();
+                
+                workout.Exercises = _workoutRepository.GenerateExercisesForNewWorkout(split_id);
 
                 return workout;
             }
