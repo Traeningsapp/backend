@@ -1,6 +1,7 @@
 ﻿using Application.Ports.Outgoing;
 using Domain.Exercise;
 using Domain.Workout;
+using System.Dynamic;
 
 namespace Persistence
 {
@@ -54,7 +55,7 @@ namespace Persistence
             }
         }
 
-        public List<IExercise> GenerateExercisesForNewWorkout(int split_id)
+        public List<IExercise> GenerateExercisesForNewWorkout(int splitId)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace Persistence
 
                 var parameters = new 
                 { 
-                    split_id 
+                    splitId 
                 };
 
                 var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
