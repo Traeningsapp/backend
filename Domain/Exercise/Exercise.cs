@@ -14,6 +14,7 @@
             _isCompound = isCompound;
             _musclegroups = new List<IMusclegroup>();
             _muscles = new List<IMuscle>();
+            _exerciseStats = new List<IExerciseStats>();
         }
 
         private int _id;
@@ -23,6 +24,7 @@
         private bool _isCompound;
         private List<IMusclegroup>? _musclegroups;
         private List<IMuscle>? _muscles;
+        private List<IExerciseStats>? _exerciseStats;
 
         public int Id
         {
@@ -51,6 +53,10 @@
         public List<IMuscle> Muscles
         {
             get => _muscles ??= new List<IMuscle>(); set => _muscles = value;
+        }
+        public List<IExerciseStats> ExerciseStats
+        {
+            get => _exerciseStats ??= new List<IExerciseStats>(); set => _exerciseStats = value;
         }
     }
 }
