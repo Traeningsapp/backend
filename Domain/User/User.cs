@@ -4,7 +4,7 @@ namespace Domain.User
 {
     public class User : IUser
     {
-        public User(int id)
+        public User(string id)
         {
             _id = id;
             _workoutHistory = new List<IWorkout>();
@@ -14,12 +14,12 @@ namespace Domain.User
         {
         }
 
-        private int _id;
+        private string? _id;
         private List<IWorkout>? _workoutHistory;
 
-        public int Id
+        public string Id
         {
-            get => _id; set => _id = value;
+            get => string.IsNullOrEmpty(_id) ? "" : _id; set => _id = value;
         }
         public List<IWorkout> WorkoutHistory
         {
