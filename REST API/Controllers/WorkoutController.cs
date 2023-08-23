@@ -15,7 +15,7 @@ namespace REST_API.Controllers
             _workoutUseCase = workoutUseCase;
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("get/newworkout/{split_id}")]
         [HttpGet]
         public IActionResult GetNewWorkout(int split_id)
