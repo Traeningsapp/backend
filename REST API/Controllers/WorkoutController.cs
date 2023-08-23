@@ -16,13 +16,13 @@ namespace REST_API.Controllers
         }
 
         //[Authorize]
-        [Route("get/newworkout/{split_id}")]
+        [Route("get/newworkout/split/{splitId}/user/{userId}")]
         [HttpGet]
-        public IActionResult GetNewWorkout(int split_id)
+        public IActionResult GetNewWorkout(int splitId, int userId)
         {
             try
             {
-                var apiResponse = _workoutUseCase.GenerateNewWorkout(split_id);
+                var apiResponse = _workoutUseCase.GenerateNewWorkout(splitId, userId);
 
                 return Ok(apiResponse);
             }

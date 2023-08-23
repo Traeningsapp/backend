@@ -17,13 +17,20 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public IWorkout GenerateNewWorkout(int split_id)
+        public IWorkout GenerateNewWorkout(int split_id, int userId)
         {
             try
             {
-                IWorkout workout = new Workout();
-                
-                workout.Exercises = _workoutRepository.GenerateExercisesForNewWorkout(split_id);
+                IUser user = new User(userId);
+                IWorkout workout = new Workout(user)
+                {
+                    Exercises = _workoutRepository.GenerateExercisesForNewWorkout(split_id)
+                };
+
+                foreach (IExercise exercise in workout.Exercises)
+                {
+                    exercise.Stats = _exerciseRepository.GetExerciseStats(exercise.Id, workout.User.Id);
+                }
 
                 return workout;
             }

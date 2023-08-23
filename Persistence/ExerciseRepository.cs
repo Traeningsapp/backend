@@ -126,5 +126,26 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public List<IExerciseStats> GetExerciseStats(int exerciseId, int userId)
+        {
+            try
+            {
+                string procedureName = "Exercise_GetExerciseStats";
+                var parameters = new
+                {
+                    exerciseId,
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<ExerciseStats>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IExerciseStats>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
