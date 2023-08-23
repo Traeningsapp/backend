@@ -18,7 +18,7 @@ namespace REST_API.Controllers
         //[Authorize]
         [Route("get/newworkout/split/{splitId}/user/{userId}")]
         [HttpGet]
-        public IActionResult GetNewWorkout(int splitId, int userId)
+        public IActionResult GetNewWorkout(int splitId, string userId)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace REST_API.Controllers
         [Authorize]
         [Route("get/workoutfromhistory/user/{userId}/workout/{workoutId}")]
         [HttpGet]
-        public IActionResult GetWorkoutFromHistory(int userId, int workoutId)
+        public IActionResult GetWorkoutFromHistory(string userId, int workoutId)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace REST_API.Controllers
         [Authorize]
         [Route("get/workouthistory/user/{userId}")]
         [HttpGet]
-        public IActionResult GetWorkoutHistory(int userId)
+        public IActionResult GetWorkoutHistory(string userId)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace REST_API.Controllers
         [Authorize]
         [Route("save/workout/user/{userId}/workout/{workoutAsJson}")]
         [HttpPost]
-        public IActionResult SaveWorkout(int userId, string workoutAsJson)
+        public IActionResult SaveWorkout(string userId, string workoutAsJson)
         {
             try
             {

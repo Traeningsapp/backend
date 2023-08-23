@@ -13,7 +13,7 @@ namespace Domain.Exercise
         }
 
         private int _workoutId;
-        private int _userId;
+        private string? _userId;
         private int _exerciseId;
         private DateTime _createdDate;
         private int _setNumber;
@@ -24,9 +24,9 @@ namespace Domain.Exercise
         {
             get => _workoutId; set => _workoutId = value;
         }
-        public int UserId
+        public string UserId
         {
-            get => _userId; set => _userId = value;
+            get => string.IsNullOrEmpty(_userId) ? "" : _userId; set => _userId = value;
         }
         public int ExerciseId
         {

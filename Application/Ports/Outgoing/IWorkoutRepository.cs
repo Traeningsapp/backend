@@ -12,7 +12,7 @@ namespace Application.Ports.Outgoing
     {
         void SaveWorkout(IWorkout workout);
         List<IExercise> GenerateExercisesForNewWorkout(int split_id);
-        List<IWorkout> GetWorkoutHistoryByUserId(int userId);
-        IWorkout StartWorkoutFromHistory(int userId, int workoutId);
+        List<IWorkout> GetWorkoutHistoryByUserId(string userId);
+        IWorkout StartWorkoutFromHistory(string userId, int workoutId);
     }
 }

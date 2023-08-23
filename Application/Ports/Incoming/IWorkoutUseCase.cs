@@ -4,9 +4,9 @@ namespace Application.Ports.Incoming
 {
     public interface IWorkoutUseCase
     {
-        IWorkout GenerateNewWorkout(int split_id, int userId);
-        void SaveWorkout(int userId, string workoutAsJson);
-        List<IWorkout> GetWorkoutHistory(int userId);
-        IWorkout StartWorkoutFromHistory(int userId, int workoutId);
+        IWorkout GenerateNewWorkout(int split_id, string userId);
+        void SaveWorkout(string userId, string workoutAsJson);
+        List<IWorkout> GetWorkoutHistory(string userId);
+        IWorkout StartWorkoutFromHistory(string userId, int workoutId);
     }
 }

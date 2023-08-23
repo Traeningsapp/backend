@@ -17,7 +17,7 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public IWorkout GenerateNewWorkout(int split_id, int userId)
+        public IWorkout GenerateNewWorkout(int split_id, string userId)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Application.UseCases
             }
         }
 
-        public List<IWorkout> GetWorkoutHistory(int userId)
+        public List<IWorkout> GetWorkoutHistory(string userId)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Application.UseCases
             }
         }
 
-        public void SaveWorkout(int userId, string workoutAsJson)
+        public void SaveWorkout(string userId, string workoutAsJson)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Application.UseCases
             }
         }
 
-        public IWorkout StartWorkoutFromHistory(int userId, int workoutId)
+        public IWorkout StartWorkoutFromHistory(string userId, int workoutId)
         {
             try
             {

@@ -127,7 +127,7 @@ namespace Persistence
             }
         }
 
-        public List<IExerciseStats> GetExerciseStats(int exerciseId, int userId)
+        public List<IExerciseStats> GetExerciseStats(int exerciseId, string userId)
         {
             try
             {

@@ -7,7 +7,7 @@
         int Kilo { get; set; }
         int Reps { get; set; }
         int SetNumber { get; set; }
-        int UserId { get; set; }
+        string UserId { get; set; }
         int WorkoutId { get; set; }
     }
 }

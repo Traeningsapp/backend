@@ -76,7 +76,7 @@ namespace Persistence
             }
         }
 
-        public List<IWorkout> GetWorkoutHistoryByUserId(int userId)
+        public List<IWorkout> GetWorkoutHistoryByUserId(string userId)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Persistence
             }
         }
 
-        public IWorkout StartWorkoutFromHistory(int userId, int workoutId)
+        public IWorkout StartWorkoutFromHistory(string userId, int workoutId)
         {
             throw new NotImplementedException();
         }
