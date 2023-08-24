@@ -44,10 +44,10 @@ namespace Domain.Workout
 
             if (deserializedWorkout != null)
             {
-                _id = deserializedWorkout.Id;
-                _name = deserializedWorkout.Name;
-                _user = deserializedWorkout.User;
-                _exercises = deserializedWorkout.Exercises;
+                Id = deserializedWorkout.Id;
+                Name = deserializedWorkout.Name;
+                User = deserializedWorkout.User;
+                Exercises = deserializedWorkout.Exercises;
             }
         }
     }
