@@ -1,6 +1,7 @@
 ﻿using Application.Ports.Incoming;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using REST_API.Requests;
 
 namespace REST_API.Controllers
 {
@@ -67,13 +68,13 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("save/workout/user/{userId}/workout/{workoutAsJson}")]
+        [Route("post/workout/user/{userId}")]
         [HttpPost]
-        public IActionResult SaveWorkout(string userId, string workoutAsJson)
+        public IActionResult PostWorkout(string userId, [FromBody] WorkoutRequest request)
         {
             try
             {
-                _workoutUseCase.SaveWorkout(userId, workoutAsJson);
+                _workoutUseCase.SaveWorkout(userId, request.WorkoutAsJson, request.ExerciseStatsAsJson);
 
                 return Ok();
             }

@@ -11,5 +11,6 @@ namespace Domain.Workout
         IUser User { get; set; }
 
         void FromJson(string workoutAsJson);
+        void MapStatsToExercise(string exerciseStatsAsJson);
     }
 }
