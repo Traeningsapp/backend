@@ -1,7 +1,6 @@
 ﻿using Application.Ports.Outgoing;
 using Domain.Exercise;
 using Domain.Workout;
-using System.Dynamic;
 
 namespace Persistence
 {
@@ -22,8 +21,11 @@ namespace Persistence
                     workoutName = workout.Name
                 };
 
-                ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+                var dbResult = ExecuteStoredProcedure<int>(DbConnection(), procedureName, parameters);
+                workout.Id = dbResult.Cast<int>().First();
+
                 SaveExercisesInWorkout(workout);
+                SaveStatsInExercises(workout);
             }
             catch (Exception e)
             {
@@ -55,15 +57,46 @@ namespace Persistence
             }
         }
 
+        private void SaveStatsInExercises(IWorkout workout)
+        {
+            try
+            {
+                string procedureName = "ExerciseStats_SaveStats";
+
+                foreach (IExercise exercise in workout.Exercises)
+                {
+                    foreach (IExerciseStats stats in exercise.Stats)
+                    {
+                        var parameters = new
+                        {
+                            workoutId = workout.Id,
+                            userId = workout.User.Id,
+                            exerciseId = stats.ExerciseId,
+                            setNumber = stats.SetNumber,
+                            reps = stats.Reps,
+                            kilo = stats.Kilo,
+                            createdDate = stats.CreatedDate,
+                        };
+
+                        ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public List<IExercise> GenerateExercisesForNewWorkout(int splitId)
         {
             try
             {
                 string procedureName = "Workout_GetNew";
 
-                var parameters = new 
-                { 
-                    splitId 
+                var parameters = new
+                {
+                    splitId
                 };
 
                 var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);

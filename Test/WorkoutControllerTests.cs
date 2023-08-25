@@ -3,6 +3,7 @@ using Domain.Workout;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using REST_API.Controllers;
+using REST_API.Requests;
 using Xunit;
 
 namespace Test
@@ -113,31 +114,44 @@ namespace Test
         }
 
         [Fact]
-        public void SaveWorkout_ReturnsOkResult_WhenAuthorizedAndSuccessful()
+        public void PostWorkout_ReturnsOkResult_WhenAuthorizedAndSuccessful()
         {
             // Arrange
-            _mockWorkoutUseCase.Setup(x => x.SaveWorkout(It.IsAny<string>(), It.IsAny<string>()));
+            var mockUserId = "sampleUserId";
+            var mockWorkoutRequest = new WorkoutRequest("{}", "{}");
+
+            _mockWorkoutUseCase
+                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson, mockWorkoutRequest.ExerciseStatsAsJson))
+                .Verifiable();
 
             // Act
-            var result = _controller.SaveWorkout(It.IsAny<string>(), It.IsAny<string>());
+            var result = _controller.PostWorkout(mockUserId, mockWorkoutRequest);
 
             // Assert
             Assert.IsType<OkResult>(result);
+            _mockWorkoutUseCase.Verify();
         }
 
+
         [Fact]
-        public void SaveWorkout_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        public void PostWorkout_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
         {
             // Arrange
+            var mockUserId = "sampleUserId";
+            var mockWorkoutRequest = new WorkoutRequest("{}", "{}");
             var exceptionMessage = "Test exception message";
-            _mockWorkoutUseCase.Setup(x => x.SaveWorkout(It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception(exceptionMessage));
+
+            _mockWorkoutUseCase
+                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson, mockWorkoutRequest.ExerciseStatsAsJson))
+                .Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = _controller.SaveWorkout(It.IsAny<string>(), It.IsAny<string>());
+            var result = _controller.PostWorkout(mockUserId, mockWorkoutRequest);
 
             // Assert
             var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
         }
+
     }
 }

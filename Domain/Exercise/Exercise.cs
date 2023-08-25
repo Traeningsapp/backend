@@ -58,5 +58,10 @@
         {
             get => _stats ??= new List<IExerciseStats>(); set => _stats = value;
         }
+
+        public void MapStats(List<IExerciseStats> statsList)
+        {
+            Stats = statsList.Where(stat => stat.ExerciseId == Id).ToList();
+        }
     }
 }
