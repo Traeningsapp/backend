@@ -54,7 +54,7 @@ namespace Persistence
         {
             try
             {
-                string procedureName = "Exercises_GetByMsucleId";
+                string procedureName = "Exercises_GetByMuscleId";
                 var parameters = new
                 {
                     muscleId
