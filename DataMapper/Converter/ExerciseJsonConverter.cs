@@ -1,5 +1,4 @@
-﻿
-using Domain.Exercise;
+﻿using Domain.Exercise;
 using Newtonsoft.Json;
 
 namespace DataMapper.Converter
