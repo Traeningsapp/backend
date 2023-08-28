@@ -14,7 +14,7 @@
             _isCompound = isCompound;
             _musclegroups = new List<IMusclegroup>();
             _muscles = new List<IMuscle>();
-            _stats = new List<IExerciseStats>();
+            _exerciseStats = new List<IExerciseStats>();
         }
 
         private int _id;
@@ -24,7 +24,7 @@
         private bool _isCompound;
         private List<IMusclegroup>? _musclegroups;
         private List<IMuscle>? _muscles;
-        private List<IExerciseStats>? _stats;
+        private List<IExerciseStats>? _exerciseStats;
 
         public int Id
         {
@@ -54,14 +54,14 @@
         {
             get => _muscles ??= new List<IMuscle>(); set => _muscles = value;
         }
-        public List<IExerciseStats> Stats
+        public List<IExerciseStats> ExerciseStats
         {
-            get => _stats ??= new List<IExerciseStats>(); set => _stats = value;
+            get => _exerciseStats ??= new List<IExerciseStats>(); set => _exerciseStats = value;
         }
 
         public void MapStats(List<IExerciseStats> statsList)
         {
-            Stats = statsList.Where(stat => stat.ExerciseId == Id).ToList();
+            ExerciseStats = statsList.Where(stat => stat.ExerciseId == Id).ToList();
         }
     }
 }

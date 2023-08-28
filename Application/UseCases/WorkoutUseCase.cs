@@ -32,7 +32,7 @@ namespace Application.UseCases
 
                 foreach (IExercise exercise in workout.Exercises)
                 {
-                    exercise.Stats = _exerciseRepository.GetExerciseStats(exercise.Id, workout.User.Id);
+                    exercise.ExerciseStats = _exerciseRepository.GetExerciseStats(exercise.Id, workout.User.Id);
                 }
 
                 return workout;
@@ -57,7 +57,7 @@ namespace Application.UseCases
             }
         }
 
-        public void SaveWorkout(string userId, string workoutAsJson)
+        public int SaveWorkout(string userId, string workoutAsJson)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Application.UseCases
                 workout = _dataMapper.FromJson(workoutAsJson);
                 workout.User = user;
                 
-                _workoutRepository.SaveWorkout(workout);
+                return _workoutRepository.SaveWorkout(workout);
             }
             catch (Exception e)
             {

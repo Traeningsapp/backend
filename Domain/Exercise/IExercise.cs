@@ -9,7 +9,7 @@
         string Name { get; set; }
         List<IMusclegroup> Musclegroups { get; set; }
         List<IMuscle> Muscles { get; set; }
-        List<IExerciseStats> Stats { get; set; }
+        List<IExerciseStats> ExerciseStats { get; set; }
         void MapStats(List<IExerciseStats> statsList);
     }
 }

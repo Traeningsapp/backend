@@ -74,9 +74,9 @@ namespace REST_API.Controllers
         {
             try
             {
-                _workoutUseCase.SaveWorkout(userId, request.WorkoutAsJson);
+                var apiResponse = _workoutUseCase.SaveWorkout(userId, request.WorkoutAsJson);
 
-                return Ok();
+                return Ok(apiResponse);
             }
             catch (Exception e)
             {

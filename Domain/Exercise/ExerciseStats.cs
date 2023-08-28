@@ -13,18 +13,13 @@ namespace Domain.Exercise
         {
         }
 
-        private int _workoutId;
         private string? _userId;
         private int _exerciseId;
-        private DateTime _createdDate;
-        private int _setNumber;
+        private DateTime _timestamp;
+        private int _setnr;
         private int _reps;
         private int _kilo;
 
-        public int WorkoutId
-        {
-            get => _workoutId; set => _workoutId = value;
-        }
         public string UserId
         {
             get => string.IsNullOrEmpty(_userId) ? "" : _userId; set => _userId = value;
@@ -33,13 +28,13 @@ namespace Domain.Exercise
         {
             get => _exerciseId; set => _exerciseId = value;
         }
-        public DateTime CreatedDate
+        public DateTime Timestamp
         {
-            get => _createdDate; set => _createdDate = value;
+            get => _timestamp; set => _timestamp = value;
         }
-        public int SetNumber
+        public int Setnr
         {
-            get => _setNumber; set => _setNumber = value;
+            get => _setnr; set => _setnr = value;
         }
         public int Reps
         {
@@ -48,22 +43,6 @@ namespace Domain.Exercise
         public int Kilo
         {
             get => _kilo; set => _kilo = value;
-        }
-
-        public void FromJson(string exerciseStatsAsJson)
-        {
-            ExerciseStats? deserializedExerciseStats = JsonConvert.DeserializeObject<ExerciseStats>(exerciseStatsAsJson);
-
-            if (deserializedExerciseStats != null)
-            {
-                WorkoutId = deserializedExerciseStats.WorkoutId;
-                UserId = deserializedExerciseStats.UserId;
-                ExerciseId = deserializedExerciseStats.ExerciseId;
-                CreatedDate = deserializedExerciseStats.CreatedDate;
-                SetNumber = deserializedExerciseStats.SetNumber;
-                Reps = deserializedExerciseStats.Reps;
-                Kilo = deserializedExerciseStats.Kilo;
-            }
         }
     }
 }

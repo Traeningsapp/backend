@@ -12,7 +12,7 @@ namespace Persistence
         {
         }
 
-        public void SaveWorkout(IWorkout workout)
+        public int SaveWorkout(IWorkout workout)
         {
             try
             {
@@ -33,6 +33,8 @@ namespace Persistence
 
                 SaveExercisesInWorkout(workout);
                 SaveStatsInExercises(workout);
+
+                return workout.Id;
             }
             catch (Exception e)
             {
@@ -72,17 +74,17 @@ namespace Persistence
 
                 foreach (IExercise exercise in workout.Exercises)
                 {
-                    foreach (IExerciseStats stats in exercise.Stats)
+                    foreach (IExerciseStats stats in exercise.ExerciseStats)
                     {
                         var parameters = new
                         {
                             workoutId = workout.Id,
                             userId = workout.User.Id,
                             exerciseId = stats.ExerciseId,
-                            setNumber = stats.SetNumber,
+                            setNumber = stats.Setnr,
                             reps = stats.Reps,
                             kilo = stats.Kilo,
-                            createdDate = stats.CreatedDate,
+                            createdDate = stats.Timestamp,
                         };
 
                         ExecuteStoredProcedure(DbConnection(), procedureName, parameters);

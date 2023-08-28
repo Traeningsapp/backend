@@ -2,13 +2,11 @@
 {
     public interface IExerciseStats
     {
-        DateTime CreatedDate { get; set; }
+        DateTime Timestamp { get; set; }
         int ExerciseId { get; set; }
         int Kilo { get; set; }
         int Reps { get; set; }
-        int SetNumber { get; set; }
+        int Setnr { get; set; }
         string UserId { get; set; }
-        int WorkoutId { get; set; }
-        void FromJson(string exerciseStatsAsJson);
     }
 }
