@@ -9,5 +9,6 @@
         int SetNumber { get; set; }
         string UserId { get; set; }
         int WorkoutId { get; set; }
+        void FromJson(string exerciseStatsAsJson);
     }
 }

@@ -50,5 +50,17 @@ namespace Domain.Workout
                 Exercises = deserializedWorkout.Exercises;
             }
         }
+
+        public void MapStatsToExercise(string exerciseStatsAsJson)
+        {
+            var statsList = JsonConvert.DeserializeObject<List<IExerciseStats>>(exerciseStatsAsJson);
+
+            if (statsList == null) return;
+
+            foreach(var exercise in Exercises)
+            {
+                exercise.MapStats(statsList);
+            }
+        }
     }
 }

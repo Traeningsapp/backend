@@ -54,7 +54,7 @@ namespace Application.UseCases
             }
         }
 
-        public void SaveWorkout(string userId, string workoutAsJson)
+        public void SaveWorkout(string userId, string workoutAsJson, string exerciseStatsAsJson)
         {
             try
             {
@@ -62,7 +62,8 @@ namespace Application.UseCases
                 IWorkout workout = new Workout(user);
 
                 workout.FromJson(workoutAsJson);
-
+                workout.MapStatsToExercise(exerciseStatsAsJson);
+                
                 _workoutRepository.SaveWorkout(workout);
             }
             catch (Exception e)

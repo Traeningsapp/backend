@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,22 @@ namespace Domain.Exercise
         public int Kilo
         {
             get => _kilo; set => _kilo = value;
+        }
+
+        public void FromJson(string exerciseStatsAsJson)
+        {
+            ExerciseStats? deserializedExerciseStats = JsonConvert.DeserializeObject<ExerciseStats>(exerciseStatsAsJson);
+
+            if (deserializedExerciseStats != null)
+            {
+                WorkoutId = deserializedExerciseStats.WorkoutId;
+                UserId = deserializedExerciseStats.UserId;
+                ExerciseId = deserializedExerciseStats.ExerciseId;
+                CreatedDate = deserializedExerciseStats.CreatedDate;
+                SetNumber = deserializedExerciseStats.SetNumber;
+                Reps = deserializedExerciseStats.Reps;
+                Kilo = deserializedExerciseStats.Kilo;
+            }
         }
     }
 }

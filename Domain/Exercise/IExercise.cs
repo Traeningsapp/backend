@@ -10,5 +10,6 @@
         List<IMusclegroup> Musclegroups { get; set; }
         List<IMuscle> Muscles { get; set; }
         List<IExerciseStats> Stats { get; set; }
+        void MapStats(List<IExerciseStats> statsList);
     }
 }
