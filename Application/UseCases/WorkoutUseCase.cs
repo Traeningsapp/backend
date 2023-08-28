@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
+using DataMapper;
 using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
@@ -10,6 +11,7 @@ namespace Application.UseCases
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IExerciseRepository _exerciseRepository;
+        private readonly IDataMapper<IExercise> _dataMapper;
 
         public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository)
         {
