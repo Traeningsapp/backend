@@ -57,7 +57,7 @@ namespace Application.UseCases
             }
         }
 
-        public void SaveWorkout(string userId, string workoutAsJson, string exerciseStatsAsJson)
+        public void SaveWorkout(string userId, string workoutAsJson)
         {
             try
             {
