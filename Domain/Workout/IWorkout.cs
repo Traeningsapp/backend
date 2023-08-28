@@ -9,8 +9,7 @@ namespace Domain.Workout
         int Id { get; set; }
         string Name { get; set; }
         IUser User { get; set; }
-
-        void FromJson(string workoutAsJson);
-        void MapStatsToExercise(string exerciseStatsAsJson);
+        bool VisibleToUser { get; set; }
+        DateTime CreatedDate { get; set; }
     }
 }

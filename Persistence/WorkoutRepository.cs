@@ -1,6 +1,8 @@
 ﻿using Application.Ports.Outgoing;
+using Dapper;
 using Domain.Exercise;
 using Domain.Workout;
+using System.Data;
 
 namespace Persistence
 {
@@ -15,14 +17,19 @@ namespace Persistence
             try
             {
                 string procedureName = "Workout_Save";
-                var parameters = new
+                var inputParameters = new
                 {
-                    iuserId = workout.User.Id,
-                    workoutName = workout.Name
+                    userId = workout.User.Id,
+                    workoutName = workout.Name,
+                    savedDate = workout.CreatedDate,
+                    visibleToUser = workout.VisibleToUser,
                 };
+                var dynamicParameters = new DynamicParameters(inputParameters);
+                dynamicParameters.Add("@workoutId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                
+                ExecuteStoredProcedure<int>(DbConnection(), procedureName, dynamicParameters);
 
-                var dbResult = ExecuteStoredProcedure<int>(DbConnection(), procedureName, parameters);
-                workout.Id = dbResult.Cast<int>().First();
+                workout.Id = dynamicParameters.Get<int>("@workoutId");
 
                 SaveExercisesInWorkout(workout);
                 SaveStatsInExercises(workout);

@@ -19,6 +19,8 @@ namespace Domain.Workout
         private string? _name;
         private IUser? _user;
         private List<IExercise>? _exercises;
+        private bool _visibleToUser;
+        private DateTime _createdDate;
 
         public int Id
         {
@@ -37,30 +39,14 @@ namespace Domain.Workout
         {
             get => _exercises ??= new List<IExercise>(); set => _exercises = value;
         }
-
-        public void FromJson(string workoutAsJson)
+        public bool VisibleToUser
         {
-            IWorkout? deserializedWorkout = JsonConvert.DeserializeObject<Workout>(workoutAsJson);
-
-            if (deserializedWorkout != null)
-            {
-                Id = deserializedWorkout.Id;
-                Name = deserializedWorkout.Name;
-                User = deserializedWorkout.User;
-                Exercises = deserializedWorkout.Exercises;
-            }
+            get => _visibleToUser; set => _visibleToUser = value;
+        }
+        public DateTime CreatedDate
+        {
+            get => _createdDate; set => _createdDate = value;
         }
 
-        public void MapStatsToExercise(string exerciseStatsAsJson)
-        {
-            var statsList = JsonConvert.DeserializeObject<List<IExerciseStats>>(exerciseStatsAsJson);
-
-            if (statsList == null) return;
-
-            foreach(var exercise in Exercises)
-            {
-                exercise.MapStats(statsList);
-            }
-        }
     }
 }
