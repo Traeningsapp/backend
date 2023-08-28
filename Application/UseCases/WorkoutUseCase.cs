@@ -63,6 +63,8 @@ namespace Application.UseCases
                 IUser user = new User(userId);
                 IWorkout workout = new Workout(user);
 
+
+
                 workout.FromJson(workoutAsJson);
                 workout.MapStatsToExercise(exerciseStatsAsJson);
                 
