@@ -15,7 +15,7 @@ namespace Domain.Exercise
 
         private string? _userId;
         private int _exerciseId;
-        private DateTime _timestamp;
+        private DateTime _createdDate;
         private int _setnr;
         private int _reps;
         private int _kilo;
@@ -28,9 +28,9 @@ namespace Domain.Exercise
         {
             get => _exerciseId; set => _exerciseId = value;
         }
-        public DateTime Timestamp
+        public DateTime CreatedDate
         {
-            get => _timestamp; set => _timestamp = value;
+            get => _createdDate; set => _createdDate = value;
         }
         public int Setnr
         {

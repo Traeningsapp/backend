@@ -84,7 +84,7 @@ namespace Persistence
                             setNumber = stats.Setnr,
                             reps = stats.Reps,
                             kilo = stats.Kilo,
-                            createdDate = stats.Timestamp,
+                            createdDate = stats.CreatedDate,
                         };
 
                         ExecuteStoredProcedure(DbConnection(), procedureName, parameters);

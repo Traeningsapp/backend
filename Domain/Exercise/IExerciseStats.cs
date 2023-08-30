@@ -2,7 +2,7 @@
 {
     public interface IExerciseStats
     {
-        DateTime Timestamp { get; set; }
+        DateTime CreatedDate { get; set; }
         int ExerciseId { get; set; }
         int Kilo { get; set; }
         int Reps { get; set; }
