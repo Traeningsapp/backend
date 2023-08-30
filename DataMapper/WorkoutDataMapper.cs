@@ -1,11 +1,7 @@
-﻿using DataMapper.Converter;
+﻿using Application.Ports.Outgoing;
+using DataMapper.Converter;
 using Domain.Workout;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataMapper
 {

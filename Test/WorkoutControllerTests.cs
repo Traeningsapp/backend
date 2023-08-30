@@ -118,10 +118,10 @@ namespace Test
         {
             // Arrange
             var mockUserId = "sampleUserId";
-            var mockWorkoutRequest = new WorkoutRequest("{}", "{}");
+            var mockWorkoutRequest = new WorkoutRequest("{}");
 
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson, mockWorkoutRequest.ExerciseStatsAsJson))
+                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson))
                 .Verifiable();
 
             // Act
@@ -138,11 +138,11 @@ namespace Test
         {
             // Arrange
             var mockUserId = "sampleUserId";
-            var mockWorkoutRequest = new WorkoutRequest("{}", "{}");
+            var mockWorkoutRequest = new WorkoutRequest("{}");
             var exceptionMessage = "Test exception message";
 
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson, mockWorkoutRequest.ExerciseStatsAsJson))
+                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson))
                 .Throws(new Exception(exceptionMessage));
 
             // Act

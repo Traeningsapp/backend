@@ -1,6 +1,5 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
-using DataMapper;
 using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
@@ -62,7 +61,7 @@ namespace Application.UseCases
             try
             {
                 IUser user = new User(userId);
-                IWorkout workout = new Workout();
+                IWorkout? workout = new Workout();
 
                 workout = _dataMapper.FromJson(workoutAsJson);
                 workout.User = user;

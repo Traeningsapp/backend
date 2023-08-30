@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace Application.Ports.Outgoing
 {
     public interface IDataMapper<T>
     {
