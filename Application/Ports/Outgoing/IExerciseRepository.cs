@@ -18,6 +18,7 @@ namespace Application.Ports.Outgoing
         List<IExerciseStats> GetExerciseStats(int exerciseId, string userId);
         List<IExercise> GetFavoriteExercises(string userId);
         void SetFavoriteExercise(string userId, int exerciseId);
+        void DeleteFavoriteExercise(string userId, int exerciseId);
         List<IExerciseStats> GetExerciseStatsByWorkoutId(int workoutId, int exerciseId);
     }
 }
