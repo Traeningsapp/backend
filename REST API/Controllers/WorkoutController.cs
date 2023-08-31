@@ -16,7 +16,7 @@ namespace REST_API.Controllers
             _workoutUseCase = workoutUseCase;
         }
 
-        //[Authorize]
+        [Authorize]
         [Route("get/newworkout/split/{splitId}/user/{userId}")]
         [HttpGet]
         public IActionResult GetNewWorkout(int splitId, string userId)
@@ -48,7 +48,7 @@ namespace REST_API.Controllers
             {
                 return BadRequest(e.Message);
             }
-        }
+        } 
 
         [Authorize]
         [Route("get/workouthistory/user/{userId}")]

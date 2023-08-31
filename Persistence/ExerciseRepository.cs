@@ -147,5 +147,25 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public List<IExercise> GetFavoriteExercises(string userId)
+        {
+            try
+            {
+                string procedureName = "Exercises_getFavorites";
+                var parameters = new
+                {
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IExercise>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

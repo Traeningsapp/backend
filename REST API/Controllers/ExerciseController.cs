@@ -83,5 +83,22 @@ namespace REST_API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Authorize]
+        [Route("get/favorites/user/{userId}")]
+        [HttpGet]
+        public IActionResult GetFavoriteExerciselist(string userId)
+        {
+            try
+            {
+                var apiResponse = _exerciseUseCase.GetFavoriteExercises(userId);
+
+                return Ok(apiResponse);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
