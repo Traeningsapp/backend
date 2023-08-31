@@ -83,5 +83,17 @@ namespace Application.UseCases
                 throw new Exception("Couldn't fetch favorite exercises.");
             }
         }
+
+        public void SetFavoriteExercise(string userId, int exerciseId)
+        {
+            try
+            {
+                _exerciseRepository.SetFavoriteExercise(userId, exerciseId);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't post favorite exercise");
+            }
+        }
     }
 }

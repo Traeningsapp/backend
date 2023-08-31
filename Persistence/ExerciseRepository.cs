@@ -188,5 +188,24 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public void SetFavoriteExercise(string userId, int exerciseId)
+        {
+            try
+            {
+                string procedureName = "Exercise_setFavorite";
+                var parameters = new
+                {
+                    userId,
+                    exerciseId
+                };
+
+                ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
