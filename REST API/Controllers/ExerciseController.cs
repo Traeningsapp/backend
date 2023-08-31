@@ -84,7 +84,24 @@ namespace REST_API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
+        [Route("get/exerciseStats/{exerciseId}/user/{userId}")]
+        [HttpGet]
+        public IActionResult GetExerciseStats(int exerciseId, string userId) 
+        {
+            try
+            {
+                var apiResponse = _exerciseUseCase.GetExerciseStats(exerciseId, userId);
+                
+                return Ok(apiResponse);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize]
         [Route("get/favorites/user/{userId}")]
         [HttpGet]
         public IActionResult GetFavoriteExerciselist(string userId)
@@ -101,7 +118,7 @@ namespace REST_API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [Route("post/favorites/user/{userId}/exercise/{exerciseId}")]
         [HttpPost]
         public IActionResult SetFavoriteExerciselist(string userId, int exerciseId)
@@ -118,7 +135,7 @@ namespace REST_API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [Route("delete/favorites/user/{userId}/exercise/{exerciseId}")]
         [HttpDelete]
         public IActionResult DeleteFavoriteExercise(string userId, int exerciseId)

@@ -69,6 +69,19 @@ namespace Application.UseCases
                 throw new Exception("Couldn't fetch musclegroups.");
             }
         }
+        public List<IExerciseStats> GetExerciseStats(int exerciseId, string userId)
+        {
+            try
+            {
+                List<IExerciseStats> exerciseStats = _exerciseRepository.GetExerciseStats(exerciseId, userId);
+
+                return exerciseStats;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch exercise.");
+            }
+        }
 
         public List<IExercise> GetFavoriteExercises(string userId)
         {
