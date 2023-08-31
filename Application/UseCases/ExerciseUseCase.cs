@@ -122,5 +122,19 @@ namespace Application.UseCases
                 throw new Exception("Couldn't fetch How To for exercise.");
             }
         }
+
+        public List<IExerciseStats> GetExerciseStats(int exerciseId, string userId)
+        {
+            try
+            {
+                List<IExerciseStats> statsList = _exerciseRepository.GetExerciseStats(exerciseId, userId);
+
+                return statsList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch How To for exercise.");
+            }
+        }
     }
 }
