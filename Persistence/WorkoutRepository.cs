@@ -22,17 +22,22 @@ namespace Persistence
                     userId = workout.User.Id,
                     workoutName = workout.Name,
                     savedDate = workout.CreatedDate,
-                    visibleToUser = workout.VisibleToUser,
+                    visibleToUser = workout.VisibleToUser
                 };
                 var dynamicParameters = new DynamicParameters(inputParameters);
-                dynamicParameters.Add("@workoutId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                
-                ExecuteStoredProcedure<int>(DbConnection(), procedureName, dynamicParameters);
+                dynamicParameters.Add("workoutId", value: workout.Id, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+                dynamicParameters.Add("isNewWorkout", value: workout.Id, dbType: DbType.Boolean, direction: ParameterDirection.Output);
 
-                workout.Id = dynamicParameters.Get<int>("@workoutId");
+                ExecuteStoredProcedure(DbConnection(), procedureName, dynamicParameters);
 
-                SaveExercisesInWorkout(workout);
-                SaveStatsInExercises(workout);
+                workout.Id = dynamicParameters.Get<int>("workoutId");
+                bool isNewWorkout = dynamicParameters.Get<bool>("isNewWorkout");
+
+                if (isNewWorkout)
+                {
+                    SaveExercisesInWorkout(workout);
+                    SaveStatsInExercises(workout);
+                }
 
                 return workout.Id;
             }
@@ -81,7 +86,7 @@ namespace Persistence
                             workoutId = workout.Id,
                             userId = workout.User.Id,
                             exerciseId = stats.ExerciseId,
-                            setNumber = stats.Setnr,
+                            setnr = stats.Setnr,
                             reps = stats.Reps,
                             kilo = stats.Kilo,
                             createdDate = stats.CreatedDate,
