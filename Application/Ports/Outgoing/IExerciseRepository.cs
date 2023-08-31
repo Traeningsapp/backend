@@ -17,5 +17,6 @@ namespace Application.Ports.Outgoing
         List<IExercise> GetExercisesByWorkoutId(int workoutId);
         List<IExerciseStats> GetExerciseStats(int exerciseId, string userId);
         List<IExercise> GetFavoriteExercises(string userId);
+        List<IExerciseStats> GetExerciseStatsByWorkoutId(int workoutId, int exerciseId);
     }
 }

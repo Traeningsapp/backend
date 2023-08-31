@@ -84,6 +84,12 @@ namespace Application.UseCases
                     Exercises = _exerciseRepository.GetExercisesByWorkoutId(workoutId)
                 };
 
+                foreach(IExercise exercise in workout.Exercises)
+                {
+                    exercise.ExerciseStats = _exerciseRepository.GetExerciseStatsByWorkoutId(workoutId, exercise.Id);
+                }
+
+
                 return workout;
             }
             catch (Exception e)
