@@ -226,5 +226,25 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public List<IHowTo> GetExerciseHowToByExerciseId(int exerciseId)
+        {
+            try
+            {
+                string procedureName = "Exercise_getHowTo";
+                var parameters = new
+                {
+                    exerciseId
+                };
+
+                var dbResult = ExecuteStoredProcedure<HowTo>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IHowTo>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

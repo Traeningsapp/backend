@@ -108,5 +108,19 @@ namespace Application.UseCases
                 throw new Exception("Could not remove favorite exercise");
             }
         }
+
+        public List<IHowTo> GetExerciseHowTo(int exerciseId)
+        {
+            try
+            {
+                List<IHowTo> howtoList = _exerciseRepository.GetExerciseHowToByExerciseId(exerciseId);
+
+                return howtoList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't fetch How To for exercise.");
+            }
+        }
     }
 }
