@@ -8,5 +8,7 @@ namespace Application.Ports.Incoming
         List<IMuscle> GetMusclesByMusclegroupId(int musclegroupId);
         IExercise? GetExercise(int exerciseId);
         List<IExercise> GetExercisesForMuscle(int musclegroupId);
+
+        List<IExercise> GetFavoriteExercises(string userId);
     }
 }

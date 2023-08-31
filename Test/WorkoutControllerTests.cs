@@ -128,7 +128,7 @@ namespace Test
             var result = _controller.PostWorkout(mockUserId, mockWorkoutRequest);
 
             // Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
             _mockWorkoutUseCase.Verify();
         }
 

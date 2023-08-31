@@ -16,5 +16,6 @@ namespace Application.Ports.Outgoing
         List<IMusclegroup> GetMuscleGroups();
         List<IExercise> GetExercisesByWorkoutId(int workoutId);
         List<IExerciseStats> GetExerciseStats(int exerciseId, string userId);
+        List<IExercise> GetFavoriteExercises(string userId);
     }
 }
