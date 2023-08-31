@@ -134,5 +134,22 @@ namespace REST_API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Authorize]
+        [Route("get/HowTo/exercise/{exerciseId}")]
+        [HttpGet]
+        public IActionResult GetExerciseHowTolist(int exerciseId)
+        {
+            try
+            {
+                var apiResponse = _exerciseUseCase.GetExerciseHowTo(exerciseId);
+
+                return Ok(apiResponse);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
