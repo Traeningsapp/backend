@@ -95,5 +95,18 @@ namespace Application.UseCases
                 throw new Exception("Couldn't post favorite exercise");
             }
         }
+
+        public void DeleteFavoriteExercise(string userId, int exerciseId)
+        {
+            try
+            {
+                _exerciseRepository.DeleteFavoriteExercise(userId, exerciseId);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Could not remove favorite exercise");
+            }
+        }
     }
 }

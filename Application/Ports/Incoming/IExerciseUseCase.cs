@@ -10,5 +10,6 @@ namespace Application.Ports.Incoming
         List<IExercise> GetExercisesForMuscle(int musclegroupId);
         List<IExercise> GetFavoriteExercises(string userId);
         void SetFavoriteExercise(string userId, int exerciseId);
+        void DeleteFavoriteExercise(string userId, int exerciseId);
     }
 }

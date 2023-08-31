@@ -84,7 +84,7 @@ namespace REST_API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("get/favorites/user/{userId}")]
         [HttpGet]
         public IActionResult GetFavoriteExerciselist(string userId)
@@ -103,12 +103,29 @@ namespace REST_API.Controllers
 
         //[Authorize]
         [Route("post/favorites/user/{userId}/exercise/{exerciseId}")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult SetFavoriteExerciselist(string userId, int exerciseId)
         {
             try
             {
                 _exerciseUseCase.SetFavoriteExercise(userId, exerciseId);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        //[Authorize]
+        [Route("delete/favorites/user/{userId}/exercise/{exerciseId}")]
+        [HttpDelete]
+        public IActionResult DeleteFavoriteExercise(string userId, int exerciseId)
+        {
+            try
+            {
+                _exerciseUseCase.DeleteFavoriteExercise(userId, exerciseId);
 
                 return Ok();
             }
