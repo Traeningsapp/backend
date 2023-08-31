@@ -25,6 +25,8 @@
         private List<IMusclegroup>? _musclegroups;
         private List<IMuscle>? _muscles;
         private List<IExerciseStats>? _exerciseStats;
+        //private List<IHowTo> _howto;
+        //private bool _isFavorite;
 
         public int Id
         {

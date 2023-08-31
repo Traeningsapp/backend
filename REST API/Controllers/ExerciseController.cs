@@ -101,7 +101,7 @@ namespace REST_API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("post/favorites/user/{userId}/exercise/{exerciseId}")]
         [HttpGet]
         public IActionResult SetFavoriteExerciselist(string userId, int exerciseId)
