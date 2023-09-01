@@ -21,5 +21,6 @@ namespace Application.Ports.Outgoing
         void DeleteFavoriteExercise(string userId, int exerciseId);
         List<IExerciseStats> GetExerciseStatsByWorkoutId(int workoutId, int exerciseId);
         List<IHowTo> GetExerciseHowToByExerciseId(int exerciseId);
+        bool GetFavoriteStatus(int exerciseId, string userId);
     }
 }

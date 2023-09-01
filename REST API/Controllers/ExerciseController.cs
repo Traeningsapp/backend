@@ -102,6 +102,23 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
+        [Route("get/favorite/exercise/{exerciseId}/user/{userId}")]
+        [HttpGet]
+        public IActionResult GetExerciseFavoriteStatus(int exerciseId, string userId)
+        {
+            try
+            {
+                var apiResponse = _exerciseUseCase.GetExerciseFavoriteStatus(exerciseId, userId);
+
+                return Ok(apiResponse);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize]
         [Route("post/favorites/user/{userId}/exercise/{exerciseId}")]
         [HttpPost]
         public IActionResult SetFavoriteExerciselist(string userId, int exerciseId)

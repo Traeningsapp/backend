@@ -33,7 +33,7 @@ namespace Application.UseCases
             try
             {
                 List<IExercise> exercises = _exerciseRepository.GetExercisesForMuscle(muscleId);
-                
+
                 return exercises;
             }
             catch (Exception)
@@ -135,6 +135,22 @@ namespace Application.UseCases
             {
                 throw new Exception("Couldn't fetch How To for exercise.");
             }
+        }
+
+        public bool GetExerciseFavoriteStatus(int exerciseId, string userId)
+        {
+            try
+            {
+                bool isFavorite = _exerciseRepository.GetFavoriteStatus(exerciseId, userId);
+
+                return isFavorite;
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("couldn't fetch exercise favorite status");
+            }
+
         }
     }
 }
