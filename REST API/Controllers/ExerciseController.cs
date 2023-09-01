@@ -152,7 +152,7 @@ namespace REST_API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [Route("get/exerciseStats/{exerciseId}/user/{userId}")]
         [HttpGet]
         public IActionResult GetExerciseStats(int exerciseId, string userId)
