@@ -246,5 +246,26 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public bool GetFavoriteStatus(int exerciseId, string userId)
+        {
+            try
+            {
+                string procedureName = "ExerciseFavoritestatus_GetByAndExerciseAndUser";
+                var parameters = new
+                {
+                    exerciseId,
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<bool>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Any();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
