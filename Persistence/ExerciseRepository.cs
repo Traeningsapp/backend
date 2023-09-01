@@ -251,14 +251,14 @@ namespace Persistence
         {
             try
             {
-                string procedureName = "ExerciseFavoritestatus_GetByAndExerciseAndUser";
+                string procedureName = "ExerciseFavoritestatus_GetByExerciseAndUser";
                 var parameters = new
                 {
                     exerciseId,
                     userId
                 };
 
-                var dbResult = ExecuteStoredProcedure<bool>(DbConnection(), procedureName, parameters);
+                var dbResult = ExecuteStoredProcedure<string>(DbConnection(), procedureName, parameters);
 
                 return dbResult.Any();
             }
