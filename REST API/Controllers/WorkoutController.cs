@@ -74,11 +74,11 @@ namespace REST_API.Controllers
         {
             try
             {
-                var apiResponse = _workoutUseCase.SaveWorkout(userId, request.WorkoutAsJson, splitType);
+                var apiResponse = _workoutUseCase.SaveWorkout(userId, splitType, request.WorkoutAsJson);
 
                 return Ok(apiResponse);
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 return BadRequest(e.Message);
             }

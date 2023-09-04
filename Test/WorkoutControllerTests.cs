@@ -147,12 +147,13 @@ namespace Test
                 .Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest.WorkoutAsJson);
+            var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest);
 
             // Assert
             var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
         }
+
 
     }
 }
