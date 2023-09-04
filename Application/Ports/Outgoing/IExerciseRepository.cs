@@ -22,5 +22,6 @@ namespace Application.Ports.Outgoing
         List<IExerciseStats> GetExerciseStatsByWorkoutId(int workoutId, int exerciseId);
         List<IHowTo> GetExerciseHowToByExerciseId(int exerciseId);
         bool GetFavoriteStatus(int exerciseId, string userId);
+        void UpdateExerciseActiveFlag(int exerciseId, bool active, string userId, DateTime editedAt);
     }
 }

@@ -102,7 +102,7 @@ namespace Application.UseCases
         {
             try
             {
-                _workoutRepository.deleteWorkout(workoutId);
+                _workoutRepository.DeleteWorkout(workoutId);
             }
             catch (Exception e)
             {
