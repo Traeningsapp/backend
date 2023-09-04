@@ -87,11 +87,11 @@ namespace REST_API.Controllers
         [Authorize]
         [Route("patch/workout/{workoutId}")]
         [HttpPatch]
-        public IActionResult deleteWorkout(int workoutId)
+        public IActionResult DeleteWorkout(int workoutId)
         {
             try
             {
-                _workoutUseCase.deleteWorkout(workoutId);
+                _workoutUseCase.DeleteWorkout(workoutId);
 
                 return Ok();
             }

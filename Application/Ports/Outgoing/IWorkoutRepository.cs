@@ -14,6 +14,6 @@ namespace Application.Ports.Outgoing
         List<IExercise> GenerateExercisesForNewWorkout(int split_id);
         List<IWorkout> GetWorkoutHistoryByUserId(string userId);
         IWorkout StartWorkoutFromHistory(string userId, int workoutId);
-        void deleteWorkout(int workoutId);
+        void DeleteWorkout(int workoutId);
     }
 }

@@ -8,6 +8,6 @@ namespace Application.Ports.Incoming
         int SaveWorkout(string userId, string splitType, string workoutAsJson);
         List<IWorkout> GetWorkoutHistory(string userId);
         IWorkout StartWorkoutFromHistory(string userId, int workoutId);
-        void deleteWorkout(int workoutId);
+        void DeleteWorkout(int workoutId);
     }
 }

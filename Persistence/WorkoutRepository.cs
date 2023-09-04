@@ -150,7 +150,7 @@ namespace Persistence
             throw new NotImplementedException();
         }
 
-        public void deleteWorkout(int workoutId)
+        public void DeleteWorkout(int workoutId)
         {
             try
             {

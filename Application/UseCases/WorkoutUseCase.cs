@@ -98,7 +98,7 @@ namespace Application.UseCases
             }
         }
 
-        public void deleteWorkout(int workoutId)
+        public void DeleteWorkout(int workoutId)
         {
             try
             {
