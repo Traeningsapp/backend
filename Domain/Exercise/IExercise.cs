@@ -7,6 +7,7 @@
         int Id { get; set; }
         bool IsCompound { get; set; }
         string Name { get; set; }
+        bool Active { get; set; }
         List<IMusclegroup> Musclegroups { get; set; }
         List<IMuscle> Muscles { get; set; }
         List<IExerciseStats> ExerciseStats { get; set; }

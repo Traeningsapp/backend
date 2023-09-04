@@ -267,5 +267,26 @@ namespace Persistence
                 throw new Exception(e.Message);
             }
         }
+
+        public void UpdateExerciseActiveFlag(int exerciseId, bool active, string userId, DateTime editedAt)
+        {
+            try
+            {
+                string procedureName = "Exercise_SetActiveStatus";
+                var parameters = new
+                {
+                    exerciseId,
+                    active,
+                    userId,
+                    editedAt
+                };
+
+                ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

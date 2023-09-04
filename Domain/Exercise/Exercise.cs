@@ -5,13 +5,14 @@
         public Exercise()
         {
         }
-        public Exercise(int id, string name, string description, string benefits, bool isCompound)
+        public Exercise(int id, string name, string description, string benefits, bool isCompound, bool active)
         {
             _id = id;
             _name = name;
             _description = description;
             _benefits = benefits;
             _isCompound = isCompound;
+            _active = active;
             _musclegroups = new List<IMusclegroup>();
             _muscles = new List<IMuscle>();
             _exerciseStats = new List<IExerciseStats>();
@@ -22,6 +23,7 @@
         private string _description = "";
         private string _benefits = "";
         private bool _isCompound;
+        private bool _active;
         private List<IMusclegroup>? _musclegroups;
         private List<IMuscle>? _muscles;
         private List<IExerciseStats>? _exerciseStats;
@@ -45,6 +47,10 @@
         public bool IsCompound
         {
             get => _isCompound; set => _isCompound = value;
+        }
+        public bool Active
+        {
+            get => _active; set => _active = value;
         }
         public List<IMusclegroup> Musclegroups
         {

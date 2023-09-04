@@ -16,11 +16,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IExerciseUseCase, ExerciseUseCase>();
 builder.Services.AddScoped<IWorkoutUseCase, WorkoutUseCase>();
+builder.Services.AddScoped<IAdminUseCase, AdminUseCase>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IDataMapper<IWorkout>, WorkoutDataMapper>();
 
 builder.Services.AddSingleton<Persistence.IConfigurationProvider, AppConfigurationProvider>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UpdateExercise", policy =>
+        policy.RequireClaim("permissions", "update:exerciseactive"));
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -31,7 +38,6 @@ builder.Services.AddAuthentication(options =>
     options.Authority = "https://traenings-app.eu.auth0.com/";
     options.Audience = "https://traenings-app-backend.com";
 });
-
 
 var app = builder.Build();
 
