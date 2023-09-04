@@ -56,7 +56,7 @@ namespace Application.UseCases
             }
         }
 
-        public int SaveWorkout(string userId, string workoutAsJson, string splitType)
+        public int SaveWorkout(string userId, string splitType, string workoutAsJson)
         {
             try
             {
