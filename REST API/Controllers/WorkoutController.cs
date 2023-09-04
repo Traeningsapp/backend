@@ -68,15 +68,32 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("post/workout/user/{userId}")]
+        [Route("post/workout/user/{userId}/split/{splitType}")]
         [HttpPost]
-        public IActionResult PostWorkout(string userId, [FromBody] WorkoutRequest request)
+        public IActionResult PostWorkout(string userId, string splitType, [FromBody] WorkoutRequest request)
         {
             try
             {
-                var apiResponse = _workoutUseCase.SaveWorkout(userId, request.WorkoutAsJson);
+                var apiResponse = _workoutUseCase.SaveWorkout(userId, splitType, request.WorkoutAsJson);
 
                 return Ok(apiResponse);
+            }
+            catch (Exception e) 
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize]
+        [Route("patch/workout/{workoutId}")]
+        [HttpPatch]
+        public IActionResult deleteWorkout(int workoutId)
+        {
+            try
+            {
+                _workoutUseCase.deleteWorkout(workoutId);
+
+                return Ok();
             }
             catch (Exception e)
             {

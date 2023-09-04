@@ -21,6 +21,7 @@ namespace Domain.Workout
         private List<IExercise>? _exercises;
         private bool _visibleToUser;
         private DateTime _createdDate;
+        private string _splitType;
 
         public int Id
         {
@@ -46,6 +47,10 @@ namespace Domain.Workout
         public DateTime CreatedDate
         {
             get => _createdDate; set => _createdDate = value;
+        }
+        public string splitType
+        { 
+            get => _splitType; set => _splitType = value; 
         }
 
     }

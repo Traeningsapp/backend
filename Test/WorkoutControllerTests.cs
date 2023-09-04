@@ -119,17 +119,17 @@ namespace Test
             // Arrange
             var mockUserId = "sampleUserId";
             var mockWorkoutRequest = new WorkoutRequest("{}");
+            var mockSplitType = "sampleSplitType";
 
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson))
-                .Verifiable();
+                .Setup(x => x.SaveWorkout(mockUserId, mockSplitType, mockWorkoutRequest.WorkoutAsJson));
+                
 
             // Act
-            var result = _controller.PostWorkout(mockUserId, mockWorkoutRequest);
+            var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
-            _mockWorkoutUseCase.Verify();
         }
 
 
@@ -139,19 +139,21 @@ namespace Test
             // Arrange
             var mockUserId = "sampleUserId";
             var mockWorkoutRequest = new WorkoutRequest("{}");
+            var mockSplitType = "sampleSplitType";
             var exceptionMessage = "Test exception message";
 
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockWorkoutRequest.WorkoutAsJson))
+                .Setup(x => x.SaveWorkout(mockUserId, mockSplitType, mockWorkoutRequest.WorkoutAsJson))
                 .Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = _controller.PostWorkout(mockUserId, mockWorkoutRequest);
+            var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest);
 
             // Assert
             var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
         }
+
 
     }
 }

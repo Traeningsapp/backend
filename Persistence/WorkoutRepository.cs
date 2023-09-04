@@ -12,7 +12,7 @@ namespace Persistence
         {
         }
 
-        public int SaveWorkout(IWorkout workout)
+        public int SaveWorkout(IWorkout workout, string splitType)
         {
             try
             {
@@ -22,7 +22,9 @@ namespace Persistence
                     userId = workout.User.Id,
                     workoutName = workout.Name,
                     savedDate = workout.CreatedDate,
-                    visibleToUser = workout.VisibleToUser
+                    visibleToUser = workout.VisibleToUser,
+                    splitType
+                    
                 };
                 var dynamicParameters = new DynamicParameters(inputParameters);
                 dynamicParameters.Add("workoutId", value: workout.Id, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
@@ -146,6 +148,24 @@ namespace Persistence
         public IWorkout StartWorkoutFromHistory(string userId, int workoutId)
         {
             throw new NotImplementedException();
+        }
+
+        public void deleteWorkout(int workoutId)
+        {
+            try
+            {
+                string procedureName = "Workout_removeWithWorkoutId";
+                var parameters = new
+                {
+                    workoutId
+                };
+
+                ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Application.UseCases
             }
         }
 
-        public int SaveWorkout(string userId, string workoutAsJson)
+        public int SaveWorkout(string userId, string splitType, string workoutAsJson)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Application.UseCases
                 workout = _dataMapper.FromJson(workoutAsJson);
                 workout.User = user;
                 
-                return _workoutRepository.SaveWorkout(workout);
+                return _workoutRepository.SaveWorkout(workout, splitType);
             }
             catch (Exception e)
             {
@@ -91,6 +91,18 @@ namespace Application.UseCases
 
 
                 return workout;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void deleteWorkout(int workoutId)
+        {
+            try
+            {
+                _workoutRepository.deleteWorkout(workoutId);
             }
             catch (Exception e)
             {
