@@ -10,7 +10,7 @@ namespace Application.Ports.Outgoing
 {
     public interface IWorkoutRepository
     {
-        int SaveWorkout(IWorkout workout, string splitType);
+        int SaveWorkout(IWorkout workout);
         List<IExercise> GenerateExercisesForNewWorkout(int split_id);
         List<IWorkout> GetWorkoutHistoryByUserId(string userId);
         IWorkout StartWorkoutFromHistory(string userId, int workoutId);

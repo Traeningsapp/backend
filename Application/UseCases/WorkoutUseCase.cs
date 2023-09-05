@@ -10,13 +10,11 @@ namespace Application.UseCases
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IExerciseRepository _exerciseRepository;
-        private readonly IDataMapper<IWorkout> _dataMapper;
 
-        public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository, IDataMapper<IWorkout> dataMapper)
+        public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository)
         {
             _workoutRepository = workoutRepository;
             _exerciseRepository = exerciseRepository;
-            _dataMapper = dataMapper;
         }
 
         public IWorkout GenerateNewWorkout(int split_id, string userId)
@@ -56,17 +54,11 @@ namespace Application.UseCases
             }
         }
 
-        public int SaveWorkout(string userId, string splitType, string workoutAsJson)
+        public int SaveWorkout(IWorkout workout)
         {
             try
             {
-                IUser user = new User(userId);
-                IWorkout? workout = new Workout();
-
-                workout = _dataMapper.FromJson(workoutAsJson);
-                workout.User = user;
-                
-                return _workoutRepository.SaveWorkout(workout, splitType);
+                return _workoutRepository.SaveWorkout(workout);
             }
             catch (Exception e)
             {

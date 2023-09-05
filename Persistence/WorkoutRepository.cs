@@ -12,7 +12,7 @@ namespace Persistence
         {
         }
 
-        public int SaveWorkout(IWorkout workout, string splitType)
+        public int SaveWorkout(IWorkout workout)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace Persistence
                     workoutName = workout.Name,
                     savedDate = workout.CreatedDate,
                     visibleToUser = workout.VisibleToUser,
-                    splitType
+                    splitType = workout.SplitType
                     
                 };
                 var dynamicParameters = new DynamicParameters(inputParameters);

@@ -1,4 +1,8 @@
 ﻿using Application.Ports.Incoming;
+using Application.Ports.Outgoing;
+using Domain.User;
+using Domain.Workout;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using REST_API.Requests;
@@ -10,10 +14,14 @@ namespace REST_API.Controllers
     public class WorkoutController : ControllerBase
     {
         private readonly IWorkoutUseCase _workoutUseCase;
+        private readonly IValidator<IWorkout> _workoutValidator;
+        private readonly IDataMapper<IWorkout> _dataMapper;
 
-        public WorkoutController(IWorkoutUseCase workoutUseCase)
+        public WorkoutController(IWorkoutUseCase workoutUseCase, IValidator<IWorkout> workoutValidator, IDataMapper<IWorkout> dataMapper)
         {
             _workoutUseCase = workoutUseCase;
+            _workoutValidator = workoutValidator;
+            _dataMapper = dataMapper;
         }
 
         [Authorize]
@@ -74,7 +82,22 @@ namespace REST_API.Controllers
         {
             try
             {
-                var apiResponse = _workoutUseCase.SaveWorkout(userId, splitType, request.WorkoutAsJson);
+                IWorkout? workout = _dataMapper.FromJson(request.WorkoutAsJson);
+                if(workout == null)
+                {
+                    return BadRequest("Workout is null.");
+                }
+                workout.User = new User(userId);
+                workout.SplitType = splitType;
+
+                var validationResult = _workoutValidator.Validate(workout);
+
+                if(validationResult.IsValid == false)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
+                var apiResponse = _workoutUseCase.SaveWorkout(workout);
 
                 return Ok(apiResponse);
             }

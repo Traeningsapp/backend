@@ -1,6 +1,7 @@
 ﻿using Domain.Exercise;
 using Domain.User;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Domain.Workout
 {
@@ -21,12 +22,14 @@ namespace Domain.Workout
         private List<IExercise>? _exercises;
         private bool _visibleToUser;
         private DateTime _createdDate;
-        private string _splitType;
+        private string? _splitType;
+        private string? _userId;
 
         public int Id
         {
             get => _id; set => _id = value;
         }
+        [JsonProperty("name")]
         public string Name
         {
             get => _name = string.IsNullOrEmpty(_name) ? DateTime.Now.ToString() : _name;
@@ -48,10 +51,13 @@ namespace Domain.Workout
         {
             get => _createdDate; set => _createdDate = value;
         }
-        public string splitType
-        { 
-            get => _splitType; set => _splitType = value; 
+        public string SplitType
+        {
+            get => _splitType ??= ""; set => _splitType = value;
         }
-
+        public string UserId
+        {
+            get => _userId ??= ""; set => _userId = value;
+        }
     }
 }

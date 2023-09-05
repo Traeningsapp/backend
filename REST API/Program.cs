@@ -1,8 +1,10 @@
 using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
 using Application.UseCases;
+using Application.Validators;
 using DataMapper;
 using Domain.Workout;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
 using REST_API;
@@ -20,6 +22,7 @@ builder.Services.AddScoped<IAdminUseCase, AdminUseCase>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IDataMapper<IWorkout>, WorkoutDataMapper>();
+builder.Services.AddTransient<IValidator<IWorkout>, WorkoutValidator>();
 
 builder.Services.AddSingleton<Persistence.IConfigurationProvider, AppConfigurationProvider>();
 

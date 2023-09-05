@@ -1,5 +1,8 @@
 ﻿using Application.Ports.Incoming;
+using Application.Ports.Outgoing;
 using Domain.Workout;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using REST_API.Controllers;
@@ -13,11 +16,15 @@ namespace Test
 
         private readonly WorkoutController _controller;
         private readonly Mock<IWorkoutUseCase> _mockWorkoutUseCase;
+        private readonly Mock<IValidator<IWorkout>> _mockWorkoutValidator;
+        private readonly Mock<IDataMapper<IWorkout>> _mockDataMapper;
 
         public WorkoutControllerTests()
         {
             _mockWorkoutUseCase = new Mock<IWorkoutUseCase>();
-            _controller = new WorkoutController(_mockWorkoutUseCase.Object);
+            _mockWorkoutValidator = new Mock<IValidator<IWorkout>>();
+            _mockDataMapper = new Mock<IDataMapper<IWorkout>>();
+            _controller = new WorkoutController(_mockWorkoutUseCase.Object, _mockWorkoutValidator.Object, _mockDataMapper.Object);
         }
 
         [Fact]
@@ -118,12 +125,24 @@ namespace Test
         {
             // Arrange
             var mockUserId = "sampleUserId";
-            var mockWorkoutRequest = new WorkoutRequest("{}");
             var mockSplitType = "sampleSplitType";
+            var mockWorkoutRequest = new WorkoutRequest("{}");
+            var mockWorkout = new Mock<IWorkout>();
 
+            // Mock the data mapper behavior
+            _mockDataMapper
+                .Setup(x => x.FromJson(It.IsAny<string>()))
+                .Returns(mockWorkout.Object);
+
+            // Mock the workout validator to always return a valid result
+            _mockWorkoutValidator
+                .Setup(x => x.Validate(It.IsAny<IWorkout>()))
+                .Returns(new ValidationResult());
+
+            // Mock the SaveWorkout method to return a sample response
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockSplitType, mockWorkoutRequest.WorkoutAsJson));
-                
+                .Setup(x => x.SaveWorkout(It.IsAny<IWorkout>()))
+                .Returns(1); // Replace with your actual response type
 
             // Act
             var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest);
@@ -138,12 +157,14 @@ namespace Test
         {
             // Arrange
             var mockUserId = "sampleUserId";
-            var mockWorkoutRequest = new WorkoutRequest("{}");
             var mockSplitType = "sampleSplitType";
-            var exceptionMessage = "Test exception message";
+            var mockWorkoutRequest = new WorkoutRequest("{}");
+            var exceptionMessage = "Workout is null.";
+            var mockWorkout = new Mock<IWorkout>();
 
+            // Mock the SaveWorkout method to throw an exception
             _mockWorkoutUseCase
-                .Setup(x => x.SaveWorkout(mockUserId, mockSplitType, mockWorkoutRequest.WorkoutAsJson))
+                .Setup(x => x.SaveWorkout(It.IsAny<IWorkout>()))
                 .Throws(new Exception(exceptionMessage));
 
             // Act
