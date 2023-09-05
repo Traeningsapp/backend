@@ -24,7 +24,6 @@
         private string _benefits = "";
         private bool _isCompound;
         private bool _active;
-        private string? _assets = "";
         private List<IMusclegroup>? _musclegroups;
         private List<IMuscle>? _muscleActivation;
         private List<IExerciseStats>? _exerciseStats;

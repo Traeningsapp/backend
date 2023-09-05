@@ -11,7 +11,7 @@ namespace Application.UseCases
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IExerciseRepository _exerciseRepository;
 
-        public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository, IDataMapper<IWorkout> dataMapper)
+        public WorkoutUseCase(IWorkoutRepository workoutRepository, IExerciseRepository exerciseRepository)
         {
             _workoutRepository = workoutRepository;
             _exerciseRepository = exerciseRepository;
