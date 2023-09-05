@@ -11,6 +11,6 @@ namespace Domain.Workout
         IUser User { get; set; }
         bool VisibleToUser { get; set; }
         DateTime CreatedDate { get; set; }
-        string splitType { get; set; }
+        string SplitType { get; set; }
     }
 }
