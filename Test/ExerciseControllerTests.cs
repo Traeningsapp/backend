@@ -5,6 +5,7 @@ using Domain.Workout;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using Domain.Exercise;
+using Application.UseCases;
 
 namespace Test
 {
@@ -142,5 +143,212 @@ namespace Test
             var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
         }
+
+        [Fact]
+        public void GetFavoriteExerciselist_ReturnsOkObjectResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var mockExerciseList = new List<IExercise>();
+
+            _mockExerciseUseCase.Setup(x => x.GetFavoriteExercises(userId)).Returns(mockExerciseList);
+
+            // Act
+            var result = _controller.GetFavoriteExerciselist(userId);
+
+            // Assert
+            var okObjectResult = Assert.IsType<OkObjectResult>(result);
+            var exercises = Assert.IsAssignableFrom<IEnumerable<IExercise>>(okObjectResult.Value);
+            Assert.Equal(mockExerciseList, exercises);
+        }
+
+        [Fact]
+        public void GetFavoriteExerciselist_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.GetFavoriteExercises(userId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.GetFavoriteExerciselist(userId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
+        [Fact]
+        public void GetExerciseFavoriteStatus_ReturnsOkObjectResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var exerciseId = 1;
+            var userId = "sampleUserId";
+            var favoriteStatus = true;
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseFavoriteStatus(exerciseId, userId)).Returns(favoriteStatus);
+
+            // Act
+            var result = _controller.GetExerciseFavoriteStatus(exerciseId, userId);
+
+            // Assert
+            var okObjectResult = Assert.IsType<OkObjectResult>(result);
+            var status = Assert.IsType<bool>(okObjectResult.Value);
+            Assert.Equal(favoriteStatus, status);
+        }
+
+        [Fact]
+        public void GetExerciseFavoriteStatus_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var exerciseId = 123;
+            var userId = "sampleUserId";
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseFavoriteStatus(exerciseId, userId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.GetExerciseFavoriteStatus(exerciseId, userId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
+        [Fact]
+        public void SetFavoriteExerciselist_ReturnsOkResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var exerciseId = 1;
+
+            // Act
+            var result = _controller.SetFavoriteExerciselist(userId, exerciseId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void SetFavoriteExerciselist_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var exerciseId = 1;
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.SetFavoriteExercise(userId, exerciseId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.SetFavoriteExerciselist(userId, exerciseId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
+        [Fact]
+        public void DeleteFavoriteExercise_ReturnsOkResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var exerciseId = 1;
+
+            // Act
+            var result = _controller.DeleteFavoriteExercise(userId, exerciseId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void DeleteFavoriteExercise_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var userId = "sampleUserId";
+            var exerciseId = 1;
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.DeleteFavoriteExercise(userId, exerciseId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.DeleteFavoriteExercise(userId, exerciseId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
+        [Fact]
+        public void GetExerciseHowTolist_ReturnsOkObjectResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var exerciseId = 123;
+            var mockHowToList = new List<IHowTo>();
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseHowTo(exerciseId)).Returns(mockHowToList);
+
+            // Act
+            var result = _controller.GetExerciseHowTolist(exerciseId);
+
+            // Assert
+            var okObjectResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(mockHowToList, okObjectResult.Value);
+        }
+
+        [Fact]
+        public void GetExerciseHowTolist_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var exerciseId = 1;
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseHowTo(exerciseId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.GetExerciseHowTolist(exerciseId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
+        [Fact]
+        public void GetExerciseStats_ReturnsOkObjectResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var exerciseId = 1;
+            var userId = "sampleUserId";
+            var mockExerciseStats = new List<IExerciseStats>();
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseStats(exerciseId, userId)).Returns(mockExerciseStats);
+
+            // Act
+            var result = _controller.GetExerciseStats(exerciseId, userId);
+
+            // Assert
+            var okObjectResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(mockExerciseStats, okObjectResult.Value);
+        }
+
+        [Fact]
+        public void GetExerciseStats_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var exerciseId = 1;
+            var userId = "sampleUserId";
+            var exceptionMessage = "Test exception message";
+
+            _mockExerciseUseCase.Setup(x => x.GetExerciseStats(exerciseId, userId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.GetExerciseStats(exerciseId, userId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
+
     }
 }
