@@ -23,7 +23,7 @@ namespace REST_API.Controllers
             try
             {
                 _adminUseCase.UpdateExerciseActiveFlag(exerciseId, active, userId);
-                return Ok("this is a protected endpoint.");
+                return Ok();
             }
             catch (Exception e)
             {
