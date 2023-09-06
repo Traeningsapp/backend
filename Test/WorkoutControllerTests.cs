@@ -129,17 +129,14 @@ namespace Test
             var mockWorkoutRequest = new WorkoutRequest("{}");
             var mockWorkout = new Mock<IWorkout>();
 
-            // Mock the data mapper behavior
             _mockDataMapper
                 .Setup(x => x.FromJson(It.IsAny<string>()))
                 .Returns(mockWorkout.Object);
 
-            // Mock the workout validator to always return a valid result
             _mockWorkoutValidator
                 .Setup(x => x.Validate(It.IsAny<IWorkout>()))
                 .Returns(new ValidationResult());
 
-            // Mock the SaveWorkout method to return a sample response
             _mockWorkoutUseCase
                 .Setup(x => x.SaveWorkout(It.IsAny<IWorkout>()))
                 .Returns(1); // Replace with your actual response type
@@ -162,7 +159,6 @@ namespace Test
             var exceptionMessage = "Workout is null.";
             var mockWorkout = new Mock<IWorkout>();
 
-            // Mock the SaveWorkout method to throw an exception
             _mockWorkoutUseCase
                 .Setup(x => x.SaveWorkout(It.IsAny<IWorkout>()))
                 .Throws(new Exception(exceptionMessage));
@@ -175,6 +171,34 @@ namespace Test
             Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
         }
 
+        [Fact]
+        public void DeleteWorkout_ReturnsOkResult_WhenAuthorizedAndSuccessful()
+        {
+            // Arrange
+            var workoutId = 1;
 
+            // Act
+            var result = _controller.DeleteWorkout(workoutId);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void DeleteWorkout_ReturnsBadRequestObjectResult_WhenAuthorizedAndThrowsException()
+        {
+            // Arrange
+            var workoutId = 1;
+            var exceptionMessage = "Test exception message";
+
+            _mockWorkoutUseCase.Setup(x => x.DeleteWorkout(workoutId)).Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = _controller.DeleteWorkout(workoutId);
+
+            // Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(exceptionMessage, badRequestObjectResult.Value);
+        }
     }
 }
