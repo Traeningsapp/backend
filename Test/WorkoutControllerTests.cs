@@ -139,7 +139,7 @@ namespace Test
 
             _mockWorkoutUseCase
                 .Setup(x => x.SaveWorkout(It.IsAny<IWorkout>()))
-                .Returns(1); // Replace with your actual response type
+                .Returns(1);
 
             // Act
             var result = _controller.PostWorkout(mockUserId, mockSplitType, mockWorkoutRequest);
