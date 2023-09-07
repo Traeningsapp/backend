@@ -33,6 +33,10 @@ namespace Application.UseCases
             try
             {
                 List<IExercise> exercises = _exerciseRepository.GetExercisesForMuscle(muscleId);
+                foreach(var exercise in exercises)
+                {
+                    exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
+                }
 
                 return exercises;
             }
@@ -75,6 +79,10 @@ namespace Application.UseCases
             try
             {
                 List<IExercise> exercises = _exerciseRepository.GetFavoriteExercises(userId);
+                foreach (var exercise in exercises)
+                {
+                    exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
+                }
 
                 return exercises;
             }

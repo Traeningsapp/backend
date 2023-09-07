@@ -79,6 +79,8 @@ namespace Application.UseCases
                 foreach(IExercise exercise in workout.Exercises)
                 {
                     exercise.ExerciseStats = _exerciseRepository.GetExerciseStatsByWorkoutId(workoutId, exercise.Id);
+                    exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
+
                 }
 
 
