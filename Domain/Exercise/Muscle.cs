@@ -6,16 +6,18 @@
         {
             
         }
-        public Muscle(int id, int musclegroupId, string name)
+        public Muscle(int id, int musclegroupId, string name, bool isPrimary)
         {
             _name = name;
             _id = id;
             _musclegroupId = musclegroupId;
+            _isPrimary = isPrimary;
         }
 
         private int _id;
         private int _musclegroupId;
         private string _name = "";
+        private bool _isPrimary;
 
         public int Id
         {
@@ -28,6 +30,10 @@
         public string Name
         {
             get => _name; set => _name = value;
+        }
+        public bool isPrimary 
+        { 
+            get => _isPrimary; set => _isPrimary = value; 
         }
     }
 }
