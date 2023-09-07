@@ -23,5 +23,7 @@ namespace Application.Ports.Outgoing
         List<IHowTo> GetExerciseHowToByExerciseId(int exerciseId);
         bool GetFavoriteStatus(int exerciseId, string userId);
         void UpdateExerciseActiveFlag(int exerciseId, bool active, string userId, DateTime editedAt);
+        List<IExercise> GetAllExercisesBySplitIdAndFavoritesByUserId(int splitId, string userId);
+        List<IExercise> GetAbsExercises(string userId);
     }
 }

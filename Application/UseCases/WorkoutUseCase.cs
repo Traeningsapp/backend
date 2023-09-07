@@ -17,15 +17,29 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public IWorkout GenerateNewWorkout(int split_id, string userId)
+        public IWorkout GenerateNewWorkout(int splitId, string userId, bool includeAbs, bool priorFavorites)
         {
             try
             {
                 IUser user = new User(userId);
-                IWorkout workout = new Workout(user)
+                IWorkout workout = new Workout(user);
+
+                Dictionary<string, List<IExercise>> exerciseDictionary = new Dictionary<string, List<IExercise>>();
+
+                exerciseDictionary["nonAbs"] = _exerciseRepository.GetAllExercisesBySplitIdAndFavoritesByUserId(splitId, userId);
+                if (includeAbs)
+                    exerciseDictionary["abs"] = _exerciseRepository.GetAbsExercises(userId);
+
+                foreach(var list in exerciseDictionary)
                 {
-                    Exercises = _workoutRepository.GenerateExercisesForNewWorkout(split_id)
-                };
+                    foreach(var exercise in list.Value)
+                    {
+                        exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
+                    }
+                }
+
+                if (splitId == 1)
+                    workout.GenerateExercisesForPushSplit(exerciseDictionary, includeAbs, priorFavorites);
 
                 foreach (IExercise exercise in workout.Exercises)
                 {

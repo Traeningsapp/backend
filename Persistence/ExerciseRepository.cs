@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Outgoing;
 using Domain.Exercise;
+using Domain.User;
 
 namespace Persistence
 {
@@ -282,6 +283,47 @@ namespace Persistence
                 };
 
                 ExecuteStoredProcedure(DbConnection(), procedureName, parameters);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public List<IExercise> GetAllExercisesBySplitIdAndFavoritesByUserId(int splitId, string userId)
+        {
+            try
+            {
+                string procedureName = "Exercise_GetAllFromSplitTypeIncludeFavoritesByUserId";
+                var parameters = new
+                {
+                    splitId,
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IExercise>().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public List<IExercise> GetAbsExercises(string userId)
+        {
+            try
+            {
+                string procedureName = "Exercise_GetAbsExercises";
+                var parameters = new
+                {
+                    userId
+                };
+
+                var dbResult = ExecuteStoredProcedure<Exercise>(DbConnection(), procedureName, parameters);
+
+                return dbResult.Cast<IExercise>().ToList();
             }
             catch (Exception e)
             {
