@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
+using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
 using FluentValidation;

@@ -21,7 +21,7 @@ namespace Domain.Exercise
 
         private int _exerciseId;
         private int _step;
-        private string _step_text;
+        private string? _step_text;
 
         public int exerciseId
         {
@@ -37,7 +37,7 @@ namespace Domain.Exercise
 
         public string step_text
         {
-            get => _step_text;
+            get => _step_text ??= "";
             set => _step_text = value;
         }
     }
