@@ -5,7 +5,7 @@
         public Exercise()
         {
         }
-        public Exercise(int id, string name, string description, string benefits, bool isCompound, bool active)
+        public Exercise(int id, string name, string description, string benefits, bool isCompound, bool active, bool isFavorite, int musclegroupId)
         {
             _id = id;
             _name = name;
@@ -13,7 +13,8 @@
             _benefits = benefits;
             _isCompound = isCompound;
             _active = active;
-            _musclegroups = new List<IMusclegroup>();
+            _isFavorite = isFavorite;
+            _musclegroupId = musclegroupId;
             _muscleActivation = new List<IMuscle>();
             _exerciseStats = new List<IExerciseStats>();
         }
@@ -24,7 +25,8 @@
         private string _benefits = "";
         private bool _isCompound;
         private bool _active;
-        private List<IMusclegroup>? _musclegroups;
+        private bool _isFavorite;
+        private int _musclegroupId;
         private List<IMuscle>? _muscleActivation;
         private List<IExerciseStats>? _exerciseStats;
 
@@ -44,7 +46,7 @@
         {
             get => _benefits; set => _benefits = value;
         }
-        public bool IsCompound
+        public bool Compound
         {
             get => _isCompound; set => _isCompound = value;
         }
@@ -52,9 +54,13 @@
         {
             get => _active; set => _active = value;
         }
-        public List<IMusclegroup> Musclegroups
+        public bool IsFavorite
         {
-            get => _musclegroups ??= new List<IMusclegroup>(); set => _musclegroups = value;
+            get => _isFavorite; set => _isFavorite = value;
+        }
+        public int MusclegroupId
+        {
+            get => _musclegroupId; set => _musclegroupId = value;
         }
         public List<IMuscle> Muscles
         {

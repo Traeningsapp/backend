@@ -4,7 +4,7 @@ namespace Application.Ports.Incoming
 {
     public interface IWorkoutUseCase
     {
-        IWorkout GenerateNewWorkout(int split_id, string userId);
+        IWorkout GenerateNewWorkout(int split_id, string userId, bool includeAbs, bool priorFavorites);
         int SaveWorkout(IWorkout workout);
         List<IWorkout> GetWorkoutHistory(string userId);
         IWorkout StartWorkoutFromHistory(string userId, int workoutId);

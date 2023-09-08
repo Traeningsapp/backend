@@ -32,10 +32,10 @@ namespace Test
         {
             // Arrange
             var mockWorkout = new Mock<IWorkout>();
-            _mockWorkoutUseCase.Setup(x => x.GenerateNewWorkout(It.IsAny<int>(), It.IsAny<string>())).Returns(mockWorkout.Object);
+            _mockWorkoutUseCase.Setup(x => x.GenerateNewWorkout(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(mockWorkout.Object);
 
             // Act
-            var result = _controller.GetNewWorkout(It.IsAny<int>(), It.IsAny<string>());
+            var result = _controller.GetNewWorkout(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>());
 
             // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
@@ -48,10 +48,10 @@ namespace Test
         {
             // Arrange
             var exceptionMessage = "Test exception message";
-            _mockWorkoutUseCase.Setup(x => x.GenerateNewWorkout(It.IsAny<int>(), It.IsAny<string>())).Throws(new Exception(exceptionMessage));
+            _mockWorkoutUseCase.Setup(x => x.GenerateNewWorkout(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = _controller.GetNewWorkout(It.IsAny<int>(), It.IsAny<string>());
+            var result = _controller.GetNewWorkout(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>());
 
             // Assert
             var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);

@@ -25,13 +25,13 @@ namespace REST_API.Controllers
         }
 
         [Authorize]
-        [Route("get/newworkout/split/{splitId}/user/{userId}")]
+        [Route("get/newworkout/split/{splitId}/user/{userId}/abs/{includeAbs}/prioritizeFavs/{prioFavorites}")]
         [HttpGet]
-        public IActionResult GetNewWorkout(int splitId, string userId)
+        public IActionResult GetNewWorkout(int splitId, string userId, bool includeAbs, bool prioFavorites)
         {
             try
             {
-                var apiResponse = _workoutUseCase.GenerateNewWorkout(splitId, userId);
+                var apiResponse = _workoutUseCase.GenerateNewWorkout(splitId, userId, includeAbs, prioFavorites);
 
                 return Ok(apiResponse);
             }
