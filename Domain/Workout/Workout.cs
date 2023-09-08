@@ -62,38 +62,32 @@ namespace Domain.Workout
 
         public void GenerateExercisesForPushSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool prioFavorites)
         {
-
-            Exercises.AddRange(SelectNonAbsExercises(exerciseDictionary["nonAbs"], prioFavorites));
+            Exercises.AddRange(SelectNonAbsPushExercises(exerciseDictionary["nonAbs"], prioFavorites));
 
             if (includeAbs)
                 Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
 
         }
-
-        static List<IExercise> SelectNonAbsExercises(List<IExercise> exercises, bool priorFavorites)
+        public void GenerateExercisesForPullSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool prioFavorites)
         {
-            var random = new Random();
-
-            Exercises.AddRange(SelectNonAbsPullExercises(exerciseDictionary["nonAbs"], 8, prioFavorites));
+            Exercises.AddRange(SelectNonAbsPullExercises(exerciseDictionary["nonAbs"], prioFavorites));
 
             if (includeAbs)
                 Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
 
         }
-
         public void GenerateExercisesForLegsSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool prioFavorites)
         {
-
-            Exercises.AddRange(SelectNonAbsLegsExercises(exerciseDictionary["nonAbs"], 8, prioFavorites));
+            Exercises.AddRange(SelectNonAbsLegsExercises(exerciseDictionary["nonAbs"], prioFavorites));
 
             if (includeAbs)
                 Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
 
         }
 
-        static List<IExercise> SelectNonAbsPushExercises(List<IExercise> exercises, int count, bool prioFavorites)
+        static List<IExercise> SelectNonAbsPushExercises(List<IExercise> exercises, bool prioFavorites)
         {
-
+            var random = new Random();
             List<IExercise> chestExercises = new List<IExercise>();
             // adding starting compound exercises
             var filteredChestExercises = exercises
@@ -203,7 +197,7 @@ namespace Domain.Workout
 
         }
 
-        static List<IExercise> SelectNonAbsPullExercises(List<IExercise> exercises, int count, bool prioFavorites)
+        static List<IExercise> SelectNonAbsPullExercises(List<IExercise> exercises, bool prioFavorites)
         {
             List<IExercise> startingcompoundBackExercises = new List<IExercise>();
             startingcompoundBackExercises.AddRange(
@@ -261,7 +255,7 @@ namespace Domain.Workout
             return pullExercises;
         }
 
-        static List<IExercise> SelectNonAbsLegsExercises(List<IExercise> exercises, int count, bool prioFavorites)
+        static List<IExercise> SelectNonAbsLegsExercises(List<IExercise> exercises, bool prioFavorites)
         {
             List<IExercise> legStartingCompoundExercise = new List<IExercise>();
             legStartingCompoundExercise.AddRange(

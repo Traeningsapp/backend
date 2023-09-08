@@ -24,8 +24,8 @@ namespace REST_API.Controllers
             _dataMapper = dataMapper;
         }
 
-        [Authorize]
-        [Route("get/newworkout/split/{splitId}/user/{userId}/abs/{includeAbs}/prioritizeFavs/{prioFavorites}")]
+        //[Authorize]
+        [Route("get/newworkout/split/{splitId}/user/{userId}/abs/{includeAbs}/prioitizeFavs/{prioFavorites}")]
         [HttpGet]
         public IActionResult GetNewWorkout(int splitId, string userId, bool includeAbs, bool prioFavorites)
         {
