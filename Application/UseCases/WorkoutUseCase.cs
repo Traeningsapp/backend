@@ -24,7 +24,7 @@ namespace Application.UseCases
                 IUser user = new User(userId);
                 IWorkout workout = new Workout(user);
 
-                Dictionary<string, List<IExercise>> exerciseDictionary = new Dictionary<string, List<IExercise>>();
+                Dictionary<string, List<IExercise>> exerciseDictionary = new();
 
                 exerciseDictionary["nonAbs"] = _exerciseRepository.GetAllExercisesBySplitIdAndFavoritesByUserId(splitId, userId);
                 if (includeAbs)

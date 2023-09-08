@@ -75,13 +75,13 @@ namespace Domain.Workout
         {
             var random = new Random();
 
-            List<IExercise> chestExercises = new List<IExercise>();
+            List<IExercise> chestExercises = new();
 
             var filteredChestExercises = exercises
                 .OrderByDescending(exercise => priorFavorites && exercise.IsFavorite)
                 .ThenBy(exercise => random.Next()) // Add randomness within the favorite group
                 .Where(exercise => exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == 1 && muscle.isPrimary))
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == 1 && muscle.IsPrimary))
                 .ToList();
 
             var favoriteExercises = filteredChestExercises
@@ -106,7 +106,7 @@ namespace Domain.Workout
                     if (!chestExercises.Any(ce =>
                         ce.Muscles.Any(ceMuscle =>
                             favoriteToAdd.Muscles.Any(favoriteMuscle =>
-                                favoriteMuscle.Name == ceMuscle.Name && favoriteMuscle.isPrimary == ceMuscle.isPrimary))))
+                                favoriteMuscle.Name == ceMuscle.Name && favoriteMuscle.IsPrimary == ceMuscle.IsPrimary))))
                     {
                         chestExercises.Add(favoriteToAdd);
                     }
@@ -122,7 +122,7 @@ namespace Domain.Workout
                     if (chestExercises.Any(ce =>
                         ce.Muscles.Any(ceMuscle =>
                             nonFavoriteToAdd.Muscles.Any(nonFavoriteMuscle =>
-                                nonFavoriteMuscle.Name != ceMuscle.Name && nonFavoriteMuscle.isPrimary == ceMuscle.isPrimary && nonFavoriteMuscle.isPrimary == true))))
+                                nonFavoriteMuscle.Name != ceMuscle.Name && nonFavoriteMuscle.IsPrimary == ceMuscle.IsPrimary && nonFavoriteMuscle.IsPrimary == true))))
                     {
                         chestExercises.Add(nonFavoriteToAdd);
                     }
@@ -137,20 +137,20 @@ namespace Domain.Workout
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => priorFavorites && exercise.IsFavorite)
                 .Where(exercise => !exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(m => m.MusclegroupId == 1 && m.isPrimary))
+                .Where(exercise => exercise.Muscles.Any(m => m.MusclegroupId == 1 && m.IsPrimary))
                 .Where(exercise => !chestExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
+                    ce.Muscles.Any(ceMuscle => exerciseMuscle.IsPrimary && ceMuscle.IsPrimary && exerciseMuscle.Name == ceMuscle.Name))))
                 .Take(1)
                 );
 
 
-            List<IExercise> shoulderExercises = new List<IExercise>();
+            List<IExercise> shoulderExercises = new();
             // adding starting compound exercises
             var filteredShoulderExercises = exercises
                  .Where(exercise => exercise.Compound)
-                 .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == 2 && muscle.isPrimary && muscle.Id != 12))
+                 .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == 2 && muscle.IsPrimary && muscle.Id != 12))
                  .GroupBy(exercise => exercise.Muscles
-                     .Where(m => m.MusclegroupId == 2 && exercise.Muscles.Any(x => x.Id != 12) && m.isPrimary)
+                     .Where(m => m.MusclegroupId == 2 && exercise.Muscles.Any(x => x.Id != 12) && m.IsPrimary)
                      .Select(m => m.Name)
                      .Distinct()
                      .Count())
@@ -178,20 +178,20 @@ namespace Domain.Workout
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => priorFavorites && exercise.IsFavorite)
                 .Where(exercise => !exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(m => m.MusclegroupId == 2 && m.isPrimary && m.Id != 12))
+                .Where(exercise => exercise.Muscles.Any(m => m.MusclegroupId == 2 && m.IsPrimary && m.Id != 12))
                 .Where(exercise => !shoulderExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
+                    ce.Muscles.Any(ceMuscle => exerciseMuscle.IsPrimary && ceMuscle.IsPrimary && exerciseMuscle.Name == ceMuscle.Name))))
                 .Take(1)
                 );
 
-            List<IExercise> tricepsExercises = new List<IExercise>();
+            List<IExercise> tricepsExercises = new();
             // adding non-starting compound exercise
             tricepsExercises.AddRange(
                 exercises
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => priorFavorites && exercise.IsFavorite)
                 .Where(exercise => !exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(m => m.Id == 12 && m.isPrimary))
+                .Where(exercise => exercise.Muscles.Any(m => m.Id == 12 && m.IsPrimary))
                 .Take(2)
                 );
 
@@ -211,12 +211,12 @@ namespace Domain.Workout
                 exercises
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => priorFavorites && exercise.IsFavorite)
-                .First(x => x.Muscles.Any(muscle => muscle.Name == "Obliques" && muscle.isPrimary)),
+                .First(x => x.Muscles.Any(muscle => muscle.Name == "Obliques" && muscle.IsPrimary)),
 
                 exercises
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => priorFavorites && exercise.IsFavorite)
-                .First(x => x.Muscles.Any(muscle => muscle.Name == "Abdominals" && muscle.isPrimary))
+                .First(x => x.Muscles.Any(muscle => muscle.Name == "Abdominals" && muscle.IsPrimary))
             };
 
             return absExercises;

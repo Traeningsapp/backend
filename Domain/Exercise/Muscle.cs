@@ -31,7 +31,7 @@
         {
             get => _name; set => _name = value;
         }
-        public bool isPrimary 
+        public bool IsPrimary 
         { 
             get => _isPrimary; set => _isPrimary = value; 
         }
