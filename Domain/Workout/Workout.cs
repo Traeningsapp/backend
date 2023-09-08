@@ -211,30 +211,62 @@ namespace Domain.Workout
                 .Take(2)
                 );
 
-            List<IExercise> lowerBackExercises = new List<IExercise>();
-            lowerBackExercises.AddRange(
-                exercises
-                .OrderBy(exercise => Guid.NewGuid())
-                .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
-                .Where(exercise => !exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(m => m.Id == 11 && m.isPrimary))
-                .Where(exercise => !startingcompoundBackExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
-                .Take(1)
-                );
-
 
             List<IExercise> remainingBackExercises = new List<IExercise>();
-            lowerBackExercises.AddRange(
-                exercises
-                .OrderBy(exercise => Guid.NewGuid())
-                .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
-                .Where(exercise => !exercise.Compound)
-                .Where(exercises => exercises.Muscles.Any(m => m.MusclegroupId == 3))
-                .Where(exercise => !startingcompoundBackExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
-                .Take(1)
-                );
+
+            if(startingcompoundBackExercises.Any(exercise => exercise.Muscles.Any(m => m.Id == 11 && m.isPrimary)))
+            {
+
+                remainingBackExercises.AddRange(
+                     exercises
+                     .OrderBy(exercise => Guid.NewGuid())
+                     .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                     .Where(exercise => !exercise.Compound)
+                     .Where(exercises => exercises.Muscles.Any(m => m.MusclegroupId == 3))
+                     .Where(exercises => exercises.Muscles.Any(m => m.Id == 6 && m.isPrimary))
+                     .Take(1)
+                     );
+
+                remainingBackExercises.AddRange(
+                    exercises
+                    .OrderBy(exercise => Guid.NewGuid())
+                    .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                    .Where(exercise => !exercise.Compound)
+                    .Where(exercises => exercises.Muscles.Any(m => m.MusclegroupId == 3))
+                    .Where(exercises => exercises.Muscles.Any(m => m.Id != 11 && m.Id != 6 && m.isPrimary))
+                    .Take(2)
+                    );
+
+            } else {
+                remainingBackExercises.AddRange(
+                    exercises
+                    .OrderBy(exercise => Guid.NewGuid())
+                    .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                    .Where(exercise => !exercise.Compound)
+                    .Where(exercise => exercise.Muscles.Any(m => m.Id == 11 && m.isPrimary))
+                    .Take(1)
+                    );
+
+                remainingBackExercises.AddRange(
+                    exercises
+                    .OrderBy(exercise => Guid.NewGuid())
+                    .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                    .Where(exercise => !exercise.Compound)
+                    .Where(exercises => exercises.Muscles.Any(m => m.MusclegroupId == 3))
+                    .Where(exercises => exercises.Muscles.Any(m => m.Id == 6 && m.isPrimary))
+                    .Take(1)
+                    );
+
+                remainingBackExercises.AddRange(
+                    exercises
+                    .OrderBy(exercise => Guid.NewGuid())
+                    .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                    .Where(exercise => !exercise.Compound)
+                    .Where(exercises => exercises.Muscles.Any(m => m.MusclegroupId == 3))
+                    .Where(exercises => exercises.Muscles.Any(m => m.Id != 11 && m.Id != 6 && m.isPrimary))
+                    .Take(1)
+                    );
+            }
 
             List<IExercise> bicepsExercises = new List<IExercise>();
             bicepsExercises.AddRange(
@@ -249,7 +281,7 @@ namespace Domain.Workout
 
             List<IExercise> pullExercises = new();
             pullExercises.AddRange(startingcompoundBackExercises);
-            pullExercises.AddRange(lowerBackExercises);
+            pullExercises.AddRange(remainingBackExercises);
             pullExercises.AddRange(bicepsExercises);
 
             return pullExercises;
@@ -269,17 +301,35 @@ namespace Domain.Workout
                 .Take(1)
                 );
 
-            List<IExercise> thighExercises = new List<IExercise>();
-            legStartingCompoundExercise.AddRange(
+            List<IExercise> remainingLegExercises = new List<IExercise>();
+            remainingLegExercises.AddRange(
                 exercises
                 .OrderBy(exercise => Guid.NewGuid())
                 .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
                 .Where(exercise => !exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(m => m.MusclegroupId == 5 && m.isPrimary))
-                .Where(exercise => !legStartingCompoundExercise.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
-                .Take(4)
+                .Where(exercise => exercise.Muscles.Any(m => m.Id == 14 && m.isPrimary))
+                .Take(1)
                 );
+
+            remainingLegExercises.AddRange(
+                exercises
+                .OrderBy(exercise => Guid.NewGuid())
+                .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                .Where(exercise => !exercise.Compound)
+                .Where(exercise => exercise.Muscles.Any(m => m.Id == 16 && m.isPrimary))
+                .Take(1)
+                );
+
+            remainingLegExercises.AddRange(
+                exercises
+                .OrderBy(exercise => Guid.NewGuid())
+                .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
+                .Where(exercise => !exercise.Compound)
+                .Where(exercise => exercise.Muscles.Any(m => m.Id == 15 && m.isPrimary))
+                .Take(1)
+                );
+
+
 
             List<IExercise> calvesExercises = new List<IExercise>();
             legStartingCompoundExercise.AddRange(
@@ -288,16 +338,20 @@ namespace Domain.Workout
                 .ThenByDescending(exercise => prioFavorites && exercise.IsFavorite)
                 .Where(exercise => !exercise.Compound)
                 .Where(exercise => exercise.Muscles.Any(m => m.Id == 17 && m.isPrimary))
-                .Where(exercise => !legStartingCompoundExercise.Any(ce => exercise.Muscles.Any(exerciseMuscle =>
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.isPrimary && ceMuscle.isPrimary && exerciseMuscle.Name == ceMuscle.Name))))
                 .Take(1)
                 );
 
 
             List<IExercise> legsExercises = new();
             legsExercises.AddRange(legStartingCompoundExercise);
-            legsExercises.AddRange(thighExercises);
-            legsExercises.AddRange(calvesExercises);
+
+            List<IExercise> randomizerList = new();
+            randomizerList.AddRange(remainingLegExercises);
+            randomizerList.AddRange(calvesExercises);
+
+            randomizerList.OrderBy(exercise => Guid.NewGuid());
+
+            legsExercises.AddRange(randomizerList);
 
             return legsExercises;
         }
