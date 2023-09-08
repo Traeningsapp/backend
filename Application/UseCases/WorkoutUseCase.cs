@@ -30,11 +30,13 @@ namespace Application.UseCases
                 if (includeAbs)
                     exerciseDictionary["abs"] = _exerciseRepository.GetAbsExercises(userId);
 
+
                 foreach(var list in exerciseDictionary)
                 {
                     foreach(var exercise in list.Value)
                     {
                         exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
+                        exercise.IsFavorite = _exerciseRepository.GetFavoriteStatus(exercise.Id, userId);
                     }
                 }
 
@@ -46,6 +48,8 @@ namespace Application.UseCases
                     exercise.ExerciseStats = _exerciseRepository.GetExerciseStats(exercise.Id, workout.User.Id);
                 }
 
+                // no need for the Muscles objects when returning
+                workout.Exercises.ForEach(exercise => exercise.Muscles = new List<IMuscle>());
                 return workout;
             }
             catch (Exception e)

@@ -1,5 +1,6 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
+using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
 using FluentValidation;
@@ -32,7 +33,6 @@ namespace REST_API.Controllers
             try
             {
                 var apiResponse = _workoutUseCase.GenerateNewWorkout(splitId, userId, includeAbs, prioFavorites);
-
                 return Ok(apiResponse);
             }
             catch (Exception e)
