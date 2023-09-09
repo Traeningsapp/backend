@@ -1,6 +1,4 @@
-﻿using Dapper.Contrib.Extensions;
-
-namespace Domain.Exercise
+﻿namespace Domain.Exercise
 {
     public class Exercise : IExercise
     {

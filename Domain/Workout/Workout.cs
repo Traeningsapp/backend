@@ -32,6 +32,8 @@ namespace Domain.Workout
         private List<IExercise>? _absExercises;
         private List<IExercise>? _backExercises;
         private List<IExercise>? _bicepsExercises;
+        private List<IExercise>? _legsExercises;
+        private List<IExercise>? _calvesExercises;
 
 
         public int Id
@@ -87,9 +89,24 @@ namespace Domain.Workout
                 Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
         }
 
-        public void GenerateExercisesForLegsSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool priorFavorites)
+        public void GenerateExercisesForLegsSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool prioFavorites)
         {
-            throw new NotImplementedException();
+            Exercises.AddRange(SelectNonAbsExercisesForLegsSplit(exerciseDictionary["nonAbs"], prioFavorites));
+
+            if (includeAbs)
+                Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
+        }
+
+        private List<IExercise> SelectNonAbsExercisesForLegsSplit(List<IExercise> exercises, bool prioFavorites)
+        {
+            AddLegsExercises(exercises, prioFavorites, 1, 5);
+            AddCalvesExercises(exercises, prioFavorites, 1);
+
+            List<IExercise> legsExercises = new();
+            legsExercises.AddRange(_legsExercises ??= new List<IExercise>());
+            legsExercises.AddRange(_calvesExercises ??= new List<IExercise>());
+
+            return legsExercises;
         }
 
         private List<IExercise> SelectNonAbsExercisesForPushSplit(List<IExercise> exercises, bool prioFavorites)
@@ -130,7 +147,28 @@ namespace Domain.Workout
             return absExercises;
         }
 
-        private void AddRearDeltsExercises(List<IExercise> exercises, bool prioFavorites, int AmountToAdd)
+        private void AddCalvesExercises(List<IExercise> exercises, bool prioFavorites, int amountToAdd)
+        {
+            var random = new Random();
+            _calvesExercises = new();
+            int calvesMuscleId = 15;
+
+            var calvesExercises = exercises
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == calvesMuscleId && muscle.IsPrimary))
+                .OrderBy(x => random.Next())
+                .ToList();
+
+            if (prioFavorites)
+                calvesExercises = calvesExercises
+                    .OrderByDescending(exercise => exercise.IsFavorite)
+                    .ToList();
+
+            _calvesExercises = calvesExercises
+                .Take(amountToAdd)
+                .ToList();
+        }
+
+        private void AddRearDeltsExercises(List<IExercise> exercises, bool prioFavorites, int amountToAdd)
         {
             var random = new Random();
             _shoulderExercises = new();
@@ -147,11 +185,11 @@ namespace Domain.Workout
                     .ToList();
 
             _shoulderExercises = rearDeltsExercises
-                .Take(AmountToAdd)
+                .Take(amountToAdd)
                 .ToList();
         }
 
-        private void AddBicepsExercises(List<IExercise> exercises, bool prioFavorites, int AmountToAdd)
+        private void AddBicepsExercises(List<IExercise> exercises, bool prioFavorites, int amountToAdd)
         {
             var random = new Random();
             _bicepsExercises = new();
@@ -168,8 +206,35 @@ namespace Domain.Workout
                     .ToList();
 
             _bicepsExercises = rearDeltsExercises
-                .Take(AmountToAdd)
+                .Take(amountToAdd)
                 .ToList();
+        }
+
+        private void AddLegsExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
+        {
+            _legsExercises = new();
+            int legsMusclegroupId = 4;
+
+            var compoundLegsExercises = FilterCompoundExercises(exercises, legsMusclegroupId);
+            var nonCompoundLegsExercises = FilterNonCompoundExercises(exercises, legsMusclegroupId);
+            var favoriteCompoundLegsExercises = FilterFavoriteCompoundExercises(compoundLegsExercises);
+            var nonFavoriteCompoundLegsExercises = FilterNonFavoriteCompoundExercises(compoundLegsExercises);
+
+            // adding starting compound exercises
+            while (_legsExercises.Count < amountOfCompoundToAdd)
+            {
+                if (prioFavorites)
+                {
+                    _legsExercises = AddFavoriteExercises(favoriteCompoundLegsExercises, amountOfCompoundToAdd);
+                    _legsExercises = AddNonFavoriteExercises(nonFavoriteCompoundLegsExercises, _legsExercises, amountOfCompoundToAdd);
+                }
+                else
+                {
+                    _legsExercises = AddExercises(compoundLegsExercises, amountOfCompoundToAdd);
+                }
+                // adding non-starting compound exercises
+                _legsExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundLegsExercises, _legsExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: true));
+            }
         }
 
         private void AddBackExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
@@ -196,7 +261,7 @@ namespace Domain.Workout
                     _backExercises = AddExercises(compoundBackExercises, amountOfCompoundToAdd);
                 }
             }
-            // adding non-starting compound exercise
+            // adding non-starting compound exercises
             _backExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundBackExercises, _backExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: true));
         }
 
@@ -223,7 +288,7 @@ namespace Domain.Workout
                     _chestExercises = AddExercises(compoundChestExercises, amountOfCompoundToAdd);
                 }
             }
-            // adding non-starting compound exercise
+            // adding non-starting compound exercises
             _chestExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundChestExercises, _chestExercises, prioFavorites, amountOfNonCompoundToAdd));
         }
 
