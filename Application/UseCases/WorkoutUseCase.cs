@@ -17,7 +17,7 @@ namespace Application.UseCases
             _exerciseRepository = exerciseRepository;
         }
 
-        public IWorkout GenerateNewWorkout(int splitId, string userId, bool includeAbs, bool priorFavorites)
+        public IWorkout GenerateNewWorkout(int splitId, string userId, bool includeAbs, bool prioFavorites)
         {
             try
             {
@@ -40,8 +40,18 @@ namespace Application.UseCases
                     }
                 }
 
-                if (splitId == 1)
-                    workout.GenerateExercisesForPushSplit(exerciseDictionary, includeAbs, priorFavorites);
+                switch (splitId)
+                {
+                    case 1:
+                        workout.GenerateExercisesForPushSplit(exerciseDictionary, includeAbs, prioFavorites);
+                        break;
+                    case 2:
+                        workout.GenerateExercisesForPullSplit(exerciseDictionary, includeAbs, prioFavorites);
+                        break;
+                    case 3:
+                        workout.GenerateExercisesForLegsSplit(exerciseDictionary, includeAbs, prioFavorites);
+                        break;
+                }
 
                 foreach (IExercise exercise in workout.Exercises)
                 {

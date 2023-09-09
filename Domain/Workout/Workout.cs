@@ -30,6 +30,9 @@ namespace Domain.Workout
         private List<IExercise>? _shoulderExercises;
         private List<IExercise>? _tricepsExercises;
         private List<IExercise>? _absExercises;
+        private List<IExercise>? _backExercises;
+        private List<IExercise>? _bicepsExercises;
+
 
         public int Id
         {
@@ -76,9 +79,12 @@ namespace Domain.Workout
 
         }
 
-        public void GenerateExercisesForPullSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool priorFavorites)
+        public void GenerateExercisesForPullSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool prioFavorites)
         {
-            throw new NotImplementedException();
+            Exercises.AddRange(SelectNonAbsExercisesForPullSplit(exerciseDictionary["nonAbs"], prioFavorites));
+
+            if (includeAbs)
+                Exercises.AddRange(SelectAbsExercises(exerciseDictionary["abs"], prioFavorites));
         }
 
         public void GenerateExercisesForLegsSplit(Dictionary<string, List<IExercise>> exerciseDictionary, bool includeAbs, bool priorFavorites)
@@ -100,6 +106,20 @@ namespace Domain.Workout
             return pushExercises;
         }
 
+        private List<IExercise> SelectNonAbsExercisesForPullSplit(List<IExercise> exercises, bool prioFavorites)
+        {
+            AddBackExercises(exercises, prioFavorites, 2, 2);
+            AddRearDeltsExercises(exercises, prioFavorites, 1);
+            AddBicepsExercises(exercises, prioFavorites, 2);
+
+            List<IExercise> pullExercises = new();
+            pullExercises.AddRange(_backExercises ??= new List<IExercise>());
+            pullExercises.AddRange(_shoulderExercises ??= new List<IExercise>());
+            pullExercises.AddRange(_bicepsExercises ??= new List<IExercise>());
+
+            return pullExercises;
+        }
+
         private List<IExercise> SelectAbsExercises(List<IExercise> exercises, bool priorFavorites)
         {
             AddAbsExercises(exercises, priorFavorites, 2);
@@ -110,12 +130,83 @@ namespace Domain.Workout
             return absExercises;
         }
 
+        private void AddRearDeltsExercises(List<IExercise> exercises, bool prioFavorites, int AmountToAdd)
+        {
+            var random = new Random();
+            _shoulderExercises = new();
+            int readDeltsMuscleId = 6;
+
+            var rearDeltsExercises = exercises
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == readDeltsMuscleId && muscle.IsPrimary))
+                .OrderBy(x => random.Next())
+                .ToList();
+
+            if (prioFavorites)
+                rearDeltsExercises = rearDeltsExercises
+                    .OrderByDescending(exercise => exercise.IsFavorite)
+                    .ToList();
+
+            _shoulderExercises = rearDeltsExercises
+                .Take(AmountToAdd)
+                .ToList();
+        }
+
+        private void AddBicepsExercises(List<IExercise> exercises, bool prioFavorites, int AmountToAdd)
+        {
+            var random = new Random();
+            _bicepsExercises = new();
+            int bicepsMuscleId = 13;
+
+            var rearDeltsExercises = exercises
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == bicepsMuscleId && muscle.IsPrimary))
+                .OrderBy(x => random.Next())
+                .ToList();
+
+            if (prioFavorites)
+                rearDeltsExercises = rearDeltsExercises
+                    .OrderByDescending(exercise => exercise.IsFavorite)
+                    .ToList();
+
+            _bicepsExercises = rearDeltsExercises
+                .Take(AmountToAdd)
+                .ToList();
+        }
+
+        private void AddBackExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
+        {
+            _backExercises = new();
+            int backMusclegroupId = 3;
+            int teresMajorAndMinorMuscleId = 10;
+
+            var compoundBackExercises = FilterCompoundExercises(exercises, backMusclegroupId, teresMajorAndMinorMuscleId);
+            var nonCompoundBackExercises = FilterNonCompoundExercises(exercises, backMusclegroupId);
+            var favoriteCompoundBackExercises = FilterFavoriteCompoundExercises(compoundBackExercises);
+            var nonFavoriteCompoundBackExercises = FilterNonFavoriteCompoundExercises(compoundBackExercises);
+
+            // adding starting compound exercises
+            while (_backExercises.Count < amountOfCompoundToAdd)
+            {
+                if (prioFavorites)
+                {
+                    _backExercises = AddFavoriteExercises(favoriteCompoundBackExercises, amountOfCompoundToAdd);
+                    _backExercises = AddNonFavoriteExercises(nonFavoriteCompoundBackExercises, _backExercises, amountOfCompoundToAdd);
+                }
+                else
+                {
+                    _backExercises = AddExercises(compoundBackExercises, amountOfCompoundToAdd);
+                }
+            }
+            // adding non-starting compound exercise
+            _backExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundBackExercises, _backExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: true));
+        }
+
         private void AddChestExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
         {
             _chestExercises = new();
+            int chestMusclegroupId = 1;
 
-            var compoundChestExercises = FilterCompoundExercises(exercises, 1);
-            var nonCompoundChestExercises = FilterNonCompoundExercises(exercises, 1);
+            var compoundChestExercises = FilterCompoundExercises(exercises, chestMusclegroupId);
+            var nonCompoundChestExercises = FilterNonCompoundExercises(exercises, chestMusclegroupId);
             var favoriteCompoundChestExercises = FilterFavoriteCompoundExercises(compoundChestExercises);
             var nonFavoriteCompoundChestExercises = FilterNonFavoriteCompoundExercises(compoundChestExercises);
 
@@ -139,9 +230,11 @@ namespace Domain.Workout
         private void AddShoulderExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
         {
             _shoulderExercises = new();
+            int shouldersMusclegroupId = 2;
+            int tricepsMuscleId = 12;
 
-            var compoundShoulderExercises = FilterCompoundExercises(exercises, 2, 12);
-            var nonCompoundShoulderExercises = FilterNonCompoundExercises(exercises, 2, 12);
+            var compoundShoulderExercises = FilterCompoundExercises(exercises, shouldersMusclegroupId, tricepsMuscleId);
+            var nonCompoundShoulderExercises = FilterNonCompoundExercises(exercises, shouldersMusclegroupId, tricepsMuscleId);
             var favoriteCompoundShoulderExercises = FilterFavoriteCompoundExercises(compoundShoulderExercises);
             var nonFavoriteCompoundShoulderExercise = FilterNonFavoriteCompoundExercises(compoundShoulderExercises);
 
@@ -167,9 +260,10 @@ namespace Domain.Workout
         {
             var random = new Random();
             _tricepsExercises = new();
+            int tricepsMuscleId = 12;
 
             var tricepsExercises = exercises
-                .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == 12 && muscle.IsPrimary))
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == tricepsMuscleId && muscle.IsPrimary))
                 .OrderBy(x => random.Next())
                 .ToList();
 
@@ -261,15 +355,19 @@ namespace Domain.Workout
             return exercises;
         }
 
-        private static List<IExercise> AddNonStartingCompoundExercises(List<IExercise> exercises, List<IExercise> currentListOfExercises, bool prioFavorites, int amountToAdd)
+        private static List<IExercise> AddNonStartingCompoundExercises(List<IExercise> exercises, List<IExercise> currentListOfExercises, bool prioFavorites, int amountToAdd, bool isSamePrimary = false)
         {
             exercises = exercises
                 .OrderBy(exercise => Guid.NewGuid())
                 .Where(exercise => !exercise.Compound)
                 .Where(exercise => exercise.Muscles.Any(m => m.IsPrimary))
-                .Where(exercise => !currentListOfExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle => // same type where primary must not exists already
-                    ce.Muscles.Any(ceMuscle => exerciseMuscle.IsPrimary && ceMuscle.IsPrimary && exerciseMuscle.Name == ceMuscle.Name))))
                 .ToList();
+
+            if (!isSamePrimary)
+                exercises = exercises
+                    .Where(exercise => !currentListOfExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle => // same type where primary must not exists already
+                    ce.Muscles.Any(ceMuscle => exerciseMuscle.IsPrimary && ceMuscle.IsPrimary && exerciseMuscle.Name == ceMuscle.Name))))
+                    .ToList();
 
             if (prioFavorites)
                 exercises = exercises
@@ -288,12 +386,12 @@ namespace Domain.Workout
                 .ToList();
         }
 
-        private static List<IExercise> FilterCompoundExercises(List<IExercise> exercises, int includeMusclegroupId, int excludeMusclegroupId)
+        private static List<IExercise> FilterCompoundExercises(List<IExercise> exercises, int includeMusclegroupId, int excludeMuscleId)
         {
             var random = new Random();
             return exercises
                 .Where(exercise => exercise.Compound)
-                .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == includeMusclegroupId && muscle.IsPrimary && muscle.Id != excludeMusclegroupId))
+                .Where(exercise => exercise.Muscles.Any(muscle => muscle.MusclegroupId == includeMusclegroupId && muscle.IsPrimary && muscle.Id != excludeMuscleId))
                 .ToList();
         }
 
