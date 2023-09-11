@@ -4,7 +4,7 @@
     {
         public Muscle()
         {
-            
+
         }
         public Muscle(int id, int musclegroupId, string name, bool isPrimary)
         {
@@ -31,9 +31,9 @@
         {
             get => _name; set => _name = value;
         }
-        public bool IsPrimary 
-        { 
-            get => _isPrimary; set => _isPrimary = value; 
+        public bool IsPrimary
+        {
+            get => _isPrimary; set => _isPrimary = value;
         }
     }
 }

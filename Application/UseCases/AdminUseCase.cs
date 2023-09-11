@@ -1,10 +1,5 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases
 {
@@ -18,15 +13,15 @@ namespace Application.UseCases
         }
         public void UpdateExerciseActiveFlag(int exerciseId, bool active, string userId)
         {
-			try
-			{
+            try
+            {
                 DateTime editedAt = DateTime.Now;
                 _exerciseRepository.UpdateExerciseActiveFlag(exerciseId, active, userId, editedAt);
             }
-			catch (Exception e)
-			{
+            catch (Exception e)
+            {
                 throw new Exception(e.Message);
-			}
+            }
         }
     }
 }

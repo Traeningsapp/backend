@@ -1,6 +1,5 @@
 ﻿using Application.Ports.Outgoing;
 using Domain.Exercise;
-using Domain.User;
 
 namespace Persistence
 {

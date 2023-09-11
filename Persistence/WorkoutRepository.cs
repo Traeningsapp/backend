@@ -24,7 +24,7 @@ namespace Persistence
                     savedDate = workout.CreatedDate,
                     visibleToUser = workout.VisibleToUser,
                     splitType = workout.SplitType
-                    
+
                 };
                 var dynamicParameters = new DynamicParameters(inputParameters);
                 dynamicParameters.Add("workoutId", value: workout.Id, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);

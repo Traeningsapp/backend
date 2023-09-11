@@ -33,7 +33,7 @@ namespace Application.UseCases
             try
             {
                 List<IExercise> exercises = _exerciseRepository.GetExercisesForMuscle(muscleId);
-                foreach(var exercise in exercises)
+                foreach (var exercise in exercises)
                 {
                     exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
                 }

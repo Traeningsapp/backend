@@ -1,8 +1,6 @@
 ﻿using Domain.Exercise;
 using Domain.User;
 using Newtonsoft.Json;
-using System;
-using System.Xml;
 
 namespace Domain.Workout
 {
@@ -151,7 +149,7 @@ namespace Domain.Workout
         {
             var random = new Random();
             _calvesExercises = new();
-            int calvesMuscleId = 15;
+            int calvesMuscleId = 17;
 
             var calvesExercises = exercises
                 .Where(exercise => exercise.Muscles.Any(muscle => muscle.Id == calvesMuscleId && muscle.IsPrimary))
@@ -213,7 +211,7 @@ namespace Domain.Workout
         private void AddLegsExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
         {
             _legsExercises = new();
-            int legsMusclegroupId = 4;
+            int legsMusclegroupId = 5;
 
             var compoundLegsExercises = FilterCompoundExercises(exercises, legsMusclegroupId);
             var nonCompoundLegsExercises = FilterNonCompoundExercises(exercises, legsMusclegroupId);
@@ -232,8 +230,36 @@ namespace Domain.Workout
                 {
                     _legsExercises = AddExercises(compoundLegsExercises, amountOfCompoundToAdd);
                 }
+
+                int quadsMuscleId = 14;
+                int glutesMuscleId = 15;
+                int hamstringsMuscleId = 16;
+
+
+                Dictionary<int, int> legsExerciseamounts = new()
+                {
+                    { quadsMuscleId, 2 },
+                    { glutesMuscleId, 2 },
+                    { hamstringsMuscleId, 2 }
+                };
+
+                int currentMuscleIdInList = _legsExercises
+                    .SelectMany(exercise => exercise.Muscles)
+                    .Where(muscle => muscle.IsPrimary)
+                    .Select(muscle => muscle.Id)
+                    .First();
+
                 // adding non-starting compound exercises
-                _legsExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundLegsExercises, _legsExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: true));
+                foreach (var kvp in legsExerciseamounts)
+                {
+                    List<IExercise> exercisesToAdd = new();
+                    int amountToAdd = kvp.Value;
+                    if (currentMuscleIdInList == kvp.Key)
+                        amountToAdd--;
+
+                    exercisesToAdd.AddRange(AddNonStartingCompoundExercises(nonCompoundLegsExercises, exercisesToAdd, prioFavorites, amountToAdd, isSamePrimary: true, isLegsExercises: true, muscleId: kvp.Key));
+                    _legsExercises.AddRange(exercisesToAdd);
+                }
             }
         }
 
@@ -262,7 +288,7 @@ namespace Domain.Workout
                 }
             }
             // adding non-starting compound exercises
-            _backExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundBackExercises, _backExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: true));
+            _backExercises.AddRange(AddNonStartingCompoundExercises(nonCompoundBackExercises, _backExercises, prioFavorites, amountOfNonCompoundToAdd, isSamePrimary: false));
         }
 
         private void AddChestExercises(List<IExercise> exercises, bool prioFavorites, int amountOfCompoundToAdd, int amountOfNonCompoundToAdd)
@@ -420,7 +446,7 @@ namespace Domain.Workout
             return exercises;
         }
 
-        private static List<IExercise> AddNonStartingCompoundExercises(List<IExercise> exercises, List<IExercise> currentListOfExercises, bool prioFavorites, int amountToAdd, bool isSamePrimary = false)
+        private static List<IExercise> AddNonStartingCompoundExercises(List<IExercise> exercises, List<IExercise> currentListOfExercises, bool prioFavorites, int amountToAdd, bool isSamePrimary = false, bool isLegsExercises = false, int muscleId = 0)
         {
             exercises = exercises
                 .OrderBy(exercise => Guid.NewGuid())
@@ -428,7 +454,12 @@ namespace Domain.Workout
                 .Where(exercise => exercise.Muscles.Any(m => m.IsPrimary))
                 .ToList();
 
-            if (!isSamePrimary)
+            if (isLegsExercises)
+                exercises = exercises
+                    .Where(exercise => exercise.Muscles.Any(m => m.Id == muscleId && m.IsPrimary))
+                    .ToList();
+
+            if (isSamePrimary)
                 exercises = exercises
                     .Where(exercise => !currentListOfExercises.Any(ce => exercise.Muscles.Any(exerciseMuscle => // same type where primary must not exists already
                     ce.Muscles.Any(ceMuscle => exerciseMuscle.IsPrimary && ceMuscle.IsPrimary && exerciseMuscle.Name == ceMuscle.Name))))

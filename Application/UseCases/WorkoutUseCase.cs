@@ -31,9 +31,9 @@ namespace Application.UseCases
                     exerciseDictionary["abs"] = _exerciseRepository.GetAbsExercises(userId);
 
 
-                foreach(var list in exerciseDictionary)
+                foreach (var list in exerciseDictionary)
                 {
-                    foreach(var exercise in list.Value)
+                    foreach (var exercise in list.Value)
                     {
                         exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);
                         exercise.IsFavorite = _exerciseRepository.GetFavoriteStatus(exercise.Id, userId);
@@ -104,7 +104,7 @@ namespace Application.UseCases
                     Exercises = _exerciseRepository.GetExercisesByWorkoutId(workoutId)
                 };
 
-                foreach(IExercise exercise in workout.Exercises)
+                foreach (IExercise exercise in workout.Exercises)
                 {
                     exercise.ExerciseStats = _exerciseRepository.GetExerciseStatsByWorkoutId(workoutId, exercise.Id);
                     exercise.Muscles = _exerciseRepository.GetMusclesInExerciseById(exercise.Id);

@@ -1,11 +1,9 @@
 ﻿using Application.Ports.Incoming;
-using REST_API.Controllers;
-using Moq;
-using Domain.Workout;
-using Microsoft.AspNetCore.Mvc;
-using Xunit;
 using Domain.Exercise;
-using Application.UseCases;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using REST_API.Controllers;
+using Xunit;
 
 namespace Test
 {

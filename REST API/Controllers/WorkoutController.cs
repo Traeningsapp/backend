@@ -1,6 +1,5 @@
 ﻿using Application.Ports.Incoming;
 using Application.Ports.Outgoing;
-using Domain.Exercise;
 using Domain.User;
 using Domain.Workout;
 using FluentValidation;
@@ -41,7 +40,7 @@ namespace REST_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [Authorize]
         [Route("get/workoutfromhistory/user/{userId}/workout/{workoutId}")]
         [HttpGet]
@@ -57,7 +56,7 @@ namespace REST_API.Controllers
             {
                 return BadRequest(e.Message);
             }
-        } 
+        }
 
         [Authorize]
         [Route("get/workouthistory/user/{userId}")]
@@ -84,7 +83,7 @@ namespace REST_API.Controllers
             try
             {
                 IWorkout? workout = _dataMapper.FromJson(request.WorkoutAsJson);
-                if(workout == null)
+                if (workout == null)
                 {
                     return BadRequest("Workout is null.");
                 }
@@ -93,7 +92,7 @@ namespace REST_API.Controllers
 
                 var validationResult = _workoutValidator.Validate(workout);
 
-                if(validationResult.IsValid == false)
+                if (validationResult.IsValid == false)
                 {
                     return BadRequest(validationResult.Errors);
                 }
@@ -102,7 +101,7 @@ namespace REST_API.Controllers
 
                 return Ok(apiResponse);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
