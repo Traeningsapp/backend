@@ -4,14 +4,13 @@ namespace Domain.User
 {
     public class User : IUser
     {
+        public User()
+        {
+        }
         public User(string id)
         {
             _id = id;
             _workoutHistory = new List<IWorkout>();
-        }
-
-        public User()
-        {
         }
 
         private string? _id;
