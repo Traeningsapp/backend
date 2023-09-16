@@ -377,7 +377,7 @@ namespace Domain.Workout
                 .OrderBy(x => random.Next()) // Shuffle the exercises
                 .ToList();
 
-            _absExercises = AddNonStartingCompoundExercises(exercises, _absExercises, prioFavorites, amountToAdd);
+            _absExercises = AddNonStartingCompoundExercises(exercises, _absExercises, prioFavorites, amountToAdd, isSamePrimary: true);
         }
         private static List<IExercise> AddFavoriteExercises(List<IExercise> favoriteExercises, int amountToAdd)
         {
